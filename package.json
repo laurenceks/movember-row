@@ -1,0 +1,22 @@
+{
+  "name": "movember-row",
+  "version": "1.0.0",
+  "description": "Promotional website for Chertsey and Guildford Movember virtual transatlantic row",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": ".git"
+  },
+  "keywords": [
+    "movember",
+    "charity",
+    "virutal",
+    "row",
+    "rowathon"
+  ],
+  "author": "Laurence Summers",
+  "license": "UNLICENSED"
+}
