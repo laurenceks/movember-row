@@ -9,14 +9,19 @@ module.exports = {
     },
     devServer: {
         static: {
-            directory: path.join(__dirname, "public")
+            directory: path.join(__dirname, "public"),
         },
         compress: true,
         port: 9000,
         liveReload: true,
         hot: false,
     },
-        plugins: [
-        new HtmlWebpackPlugin({ template: "public/index.html" })],
-    mode: "development"
-}
+    plugins: [new HtmlWebpackPlugin({template: "public/index.html"})],
+    mode: "development",
+    module: {
+        rules: [{
+            test: /\.css$/i,
+            use: ["style-loader", "css-loader"],
+        }],
+    },
+};
