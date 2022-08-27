@@ -1,3 +1,4 @@
-.idea
-node_modules
-src/tokens.js
+/.idea
+/node_modules
+/src/tokens.js
+/img
