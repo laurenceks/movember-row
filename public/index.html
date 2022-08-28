@@ -32,7 +32,7 @@
                     <li class="nav-item dropdown">
                         <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button">Leaderboards</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#leaderboards/recent">Recent</a></li>
+                            <li><a class="dropdown-item" href="#leaderboards/latest">Latest</a></li>
                             <li><a class="dropdown-item" href="#leaderboards/distance">Distance</a></li>
                             <li><a class="dropdown-item" href="#leaderboards/time">Time</a></li>
                         </ul>
@@ -99,8 +99,8 @@
                     <div class="col-12">
                         <h1>Leaderboards</h1>
                     </div>
-                    <div class="col-12 overflow-auto" id="leaderboards/recent">
-                        <h3>Most recent</h3>
+                    <div class="col-12 overflow-auto" id="leaderboards/latest">
+                        <h3>Latest</h3>
                         <table class="table table-responsive w-auto table-ranking mx-auto">
                             <thead>
                             <tr>
@@ -110,7 +110,7 @@
                                 <th>Duration</th>
                             </tr>
                             </thead>
-                            <tbody id="tRecent"></tbody>
+                            <tbody id="tLatest"></tbody>
                         </table>
                     </div>
                     <div class="col-12 col-md-6" id="leaderboards/distance">
@@ -185,7 +185,7 @@
             <li><a href="#map">Map</a></li>
             <li><a href="#statRowed">Distance rowed</a></li>
             <li><a href="#statRaised">Money rowed</a></li>
-            <li><a href="#leaderboards/recent">Recent rows</a></li>
+            <li><a href="#leaderboards/latest">Latest rows</a></li>
             <li><a href="#leaderboards/distance">Top rowers - distance</a></li>
             <li><a href="#leaderboards/time">Top rowers - time</a></li>
             <li><a href="#about/who">Who we are</a></li>

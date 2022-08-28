@@ -27,7 +27,7 @@ const init = async (e) => {
     const sheetsQuery = await fetch(url);
     let sheetsData = {
         leaderboards: {
-            recent: [],
+            latest: [],
             distance: [],
             time: [],
         },
@@ -43,7 +43,7 @@ const init = async (e) => {
 
         //map columns to leaderboard keys
         const colKeys = {
-            2: "recent",
+            2: "latest",
             7: "distance",
             10: "time",
         };
@@ -54,8 +54,8 @@ const init = async (e) => {
                 position: col.v,
                 name: sheetsRows[rowNum][colNum + 1].v,
                 value: sheetsRows[rowNum][colNum + 2].v,
-                distance: key === "recent" ? sheetsRows[rowNum][colNum + 3].v : null,
-                time: key === "recent" ? sheetsRows[rowNum][colNum + 4].v : null,
+                distance: key === "latest" ? sheetsRows[rowNum][colNum + 3].v : null,
+                time: key === "latest" ? sheetsRows[rowNum][colNum + 4].v : null,
             });
         };
 
@@ -120,8 +120,8 @@ const init = async (e) => {
 
     //map table ids to keys and data formats
     const tables = [{
-        id: "tRecent",
-        key: "recent",
+        id: "tLatest",
+        key: "latest",
         types: ["dateTime", "distance", "duration"],
     }, {
         id: "tDistance",
@@ -139,7 +139,7 @@ const init = async (e) => {
             const row = table.insertRow(i);
             row.insertCell(0).innerText = entry.position || i + 1;
             row.insertCell(1).innerText = entry.name;
-            if (x.key !== "recent") {
+            if (x.key !== "latest") {
                 row.insertCell(2).innerText = formatSheetValue(entry.value, x.type);
             } else {
                 row.insertCell(2).innerText = formatSheetValue(entry.value, x.types[0]);
