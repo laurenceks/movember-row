@@ -33,8 +33,10 @@
     "@fortawesome/fontawesome-free": "^6.1.2",
     "@turf/along": "^6.5.0",
     "@turf/length": "^6.5.0",
+    "bezier-easing": "^2.1.0",
     "bootstrap": "^5.2.0",
     "countup.js": "^2.3.2",
-    "mapbox-gl": "^2.10.0"
+    "mapbox-gl": "^2.10.0",
+    "prettier": "^2.7.1"
   }
 }
