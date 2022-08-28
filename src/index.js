@@ -6,6 +6,7 @@ import {MAPBOX_ACCESS_TOKEN} from "./tokens.js";
 import length from "@turf/length";
 import along from "@turf/along";
 import {CountUp} from "countup.js";
+import BezierEasing from "bezier-easing";
 
 const init = async (e) => {
 
@@ -282,14 +283,16 @@ const init = async (e) => {
         const mapAnimationDurationInMs = 3000;
 
         const animateMap = (durationInMs = mapAnimationDurationInMs) => {
-
+            //make sure the event listener only fires once
+            scrolledIntoFrame.unobserve(document.querySelector("#map"));
+            const easing = BezierEasing(0.16, 1, 0.3, 1); //easeOutExpo to match countUp
             let startTime = null;
             const progressAnimation = (timestamp) => {
                 if (!startTime) {
                     startTime = timestamp;
                 }
                 const runtime = timestamp - startTime;
-                const progressPercent = runtime / durationInMs;
+                const progressPercent = easing(runtime / durationInMs);
 
                 //calculate new coordinates based on current progress
                 const progressRouteCoordinates= [coordinates.start.arrayLongLat, along(route.data, sheetsData["Total distance"]*progressPercent,{units: "kilometers"}).geometry.coordinates];
@@ -314,8 +317,14 @@ const init = async (e) => {
             formattingFn: (x) => `${x}km ${Math.round((x / totalDistanceInKilometres) * 100)}%`,
         });
         const scrolledIntoFrameFunctionMap = {
-            "statRowed": countUpRowed.start,
-            "statRaised": countUpRaised.start,
+            "statRowed": () => {
+                scrolledIntoFrame.unobserve(document.querySelector("#statRowed"));
+                countUpRowed.start();
+            },
+            "statRaised": () => {
+                scrolledIntoFrame.unobserve(document.querySelector("#statRaised"));
+                countUpRaised.start();
+            },
             "map": () => {
                 countUpMarker.start();
                 animateMap();
