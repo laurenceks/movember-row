@@ -53,6 +53,12 @@ html, body {
   text-transform: uppercase;
 }
 
+a[type='button'] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
 .btn.btn-xl, .btn.btn-l {
   width: auto;
   min-width: 300px;
