@@ -8,6 +8,13 @@ import along from "@turf/along";
 import {CountUp} from "countup.js";
 import BezierEasing from "bezier-easing";
 
+//TODO - hide # from URL
+/*
+window.addEventListener("hashchange", (e) => {
+    history.pushState(null,null,window.location.href.replace("#",""));
+});
+*/
+
 const init = async (e) => {
 
     const sheetId = "1_qii19Q1Aa81zD1bPBEPS-ezK9L4WX_LEGSHekWERRM";
@@ -312,7 +319,6 @@ const init = async (e) => {
         };
 
         const countUpMarker = new CountUp("mapCurrentDistance", sheetsData["Total distance"], {
-            decimalPlaces: 2,
             duration: mapAnimationDurationInMs/1000,
             formattingFn: (x) => `${x}km ${Math.round((x / totalDistanceInKilometres) * 100)}%`,
         });
@@ -330,7 +336,7 @@ const init = async (e) => {
                 animateMap();
             },
         };
-
+        //TODO add fallback for older browsers/systems - maybe check if IntersectionObserver exists and if not just fire the animations?
         const scrolledIntoFrame = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting) {
                 scrolledIntoFrameFunctionMap[entries[0].target.id]();
