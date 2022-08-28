@@ -21,6 +21,7 @@ $btn-font-family: $headings-font-family;
 @import "../node_modules/bootstrap/scss/dropdown";
 @import "../node_modules/bootstrap/scss/root";
 @import "../node_modules/bootstrap/scss/navbar";
+@import "../node_modules/bootstrap/scss/transitions";
 
 html, body {
   @extend .h-100, .w-100;
@@ -84,7 +85,7 @@ section.cover-section {
 
   section.cover-section {
     background-image: url("../public/img/cover-sm.jpg");
-    min-height: 450px;
+    min-height: 500px;
   }
 }
 
