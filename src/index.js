@@ -4,6 +4,7 @@ import "@fortawesome/fontawesome-free/js/all.js";
 import mapboxgl from "mapbox-gl";
 import {MAPBOX_ACCESS_TOKEN} from "./tokens.js";
 import * as turf from "@turf/turf";
+import {CountUp} from "countup.js";
 
 const init = async (e) => {
 
@@ -67,11 +68,22 @@ const init = async (e) => {
 
     //set stats
     const distanceRowedFormattedString = `${sheetsData["Total distance"].toLocaleString("en-GB")}km`;
-    document.querySelector("#statRowed").innerText = distanceRowedFormattedString;
-    document.querySelector("#statRaised").innerText = new Intl.NumberFormat("en-GB", {
-        style: "currency",
-        currency: "GBP",
-    }).format(sheetsData["Amount raised"]);
+    const countUpRowed = new CountUp("statRowed", sheetsData["Total distance"], {decimalPlaces:0, duration:5, suffix: "km"});
+    const countUpRaised = new CountUp("statRaised", sheetsData["Amount raised"], {decimalPlaces:0, duration:5, prefix:"£"});
+
+    const scrolledIntoFrameFunctionMap = {
+        "statRowed" : () => countUpRowed.start(),
+        "statRaised" : () => countUpRaised.start(),
+    };
+
+    const scrolledIntoFrame = new IntersectionObserver((entries) => {
+        if(entries[0].isIntersecting){
+            scrolledIntoFrameFunctionMap[entries[0].target.id]();
+        }
+    }, {threshold: [1]});
+
+    scrolledIntoFrame.observe(document.querySelector("#statRowed"));
+    scrolledIntoFrame.observe(document.querySelector("#statRaised"));
 
     const formatSheetValue = (val, type) => {
         if (type === "dateTime") {
