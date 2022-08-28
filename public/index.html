@@ -10,7 +10,7 @@
 <header class="sticky-top">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-light">
         <div class="container-fluid px-3 w-100">
-            <a class="navbar-brand" href="#">Navbar</a>
+            <a class="navbar-brand" href="#">Movember logo</a>
             <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -37,8 +37,15 @@
                             <li><a class="dropdown-item" href="#leaderboards/time">Time</a></li>
                         </ul>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button">About</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#about/who">Who we are</a></li>
+                            <li><a class="dropdown-item" href="#about/why">Why we're doing this</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-item">
-                        <button class="btn btn-outline-light ms-3" href="uk.movember.com" type="button">Donate</button>
+                        <a class="btn btn-outline-light ms-lg-3" href="https://uk.movember.com/donate" type="button">Donate</a>
                     </li>
                 </ul>
             </div>
@@ -61,8 +68,8 @@
                     <h5>Rowed</h5>
                 </div>
                 <div class="my-5 text-center">
-                    <button class="btn btn-xl mb-3 d-block mx-auto" href="uk.movember.com" type="button">Donate</button>
-                    <button class="btn btn-l d-block mx-auto" href="https://docs.google.com/forms/d/e/1FAIpQLSfEPoSDQ1OoRSdjL6541xkDNDmtGflhUNkTK2Q5LM98619PSg/viewform?usp=sf_link" type="button">Want to add a row? Record it here</button>
+                    <a class="btn btn-xl mb-3 d-block mx-auto" href="https://uk.movember.com/donate" type="button">Donate</a>
+                    <a class="btn btn-l d-block mx-auto" href="https://docs.google.com/forms/d/e/1FAIpQLSfEPoSDQ1OoRSdjL6541xkDNDmtGflhUNkTK2Q5LM98619PSg/viewform?usp=sf_link" type="button">Want to add a row? Record it here</a>
                 </div>
             </div>
         </section>
@@ -83,7 +90,7 @@
                     <div class="progressBar"></div>
                     <div class="progressBg"></div>
                 </div>
-                <button class="btn btn-xl my-5" href="uk.movember.com" type="button">Donate</button>
+                <a class="btn btn-xl my-5" href="https://uk.movember.com/donate" type="button">Donate</a>
             </div>
         </section>
         <section id="leaderboards">
@@ -92,9 +99,9 @@
                     <div class="col-12">
                         <h1>Leaderboards</h1>
                     </div>
-                    <div class="col-12" id="leaderboards/recent">
+                    <div class="col-12 overflow-auto" id="leaderboards/recent">
                         <h3>Most recent</h3>
-                        <table class="table table-responsive w-auto table-ranking mx-auto" >
+                        <table class="table table-responsive w-auto table-ranking mx-auto">
                             <thead>
                             <tr>
                                 <th colspan="2">Name</th>
@@ -103,8 +110,7 @@
                                 <th>Duration</th>
                             </tr>
                             </thead>
-                            <tbody id="tRecent">
-                            </tbody>
+                            <tbody id="tRecent"></tbody>
                         </table>
                     </div>
                     <div class="col-12 col-md-6" id="leaderboards/distance">
@@ -116,42 +122,76 @@
                                 <th>Distance</th>
                             </tr>
                             </thead>
-                            <tbody id="tDistance">
-                            </tbody>
+                            <tbody id="tDistance"></tbody>
                         </table>
                     </div>
                     <div class="col-12 col-md-6" id="leaderboards/time">
                         <h3>Time</h3>
-                        <table class="table table-responsive w-auto table-ranking mx-auto" >
+                        <table class="table table-responsive w-auto table-ranking mx-auto">
                             <thead>
                             <tr>
                                 <th colspan="2">Name</th>
                                 <th>Time</th>
                             </tr>
                             </thead>
-                            <tbody id="tTime">
-                            </tbody>
+                            <tbody id="tTime"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </section>
-        <section>
+        <section id="about/who">
+            <div class="text-center text-sm-start">
+                <h1>Meet the rowers</h1>
+                <div>
+                    <div class="peopleContainer d-flex flex-wrap flex-sm-nowrap justify-content-center justify-content-sm-start align-items-center">
+                        <div class="text-center img-circle">
+                            <img class="img-circle" src="img/rower1.jpg"/>
+                            <h3 class="my-3">Sam</h3>
+                        </div>
+                        <p class="p-3 m-0 mb-sm-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet autem blanditiis deserunt dolorem doloribus eaque enim et, explicabo ipsa itaque labore minus modi odit placeat provident quam recusandae tenetur voluptatum.</p>
+                    </div>
+                    <div class="text-center">
+                        <a class="btn btn-xl my-3 mx-auto" href="https://uk.movember.com/donate" type="button">Donate</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="about/why">
             <div>
                 <h1>Why are we doing this?</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet autem blanditiis deserunt dolorem doloribus eaque enim et, explicabo ipsa itaque labore minus modi odit placeat provident quam recusandae tenetur voluptatum.</p>
                 <div class="text-center">
-                    <button class="btn btn-xl my-3 mx-auto" href="uk.movember.com" type="button">Donate</button>
+                    <a class="btn btn-xl my-3 mx-auto" href="https://uk.movember.com/donate" type="button">Donate</a>
                 </div>
             </div>
         </section>
         <section>
             <div>
                 <h1>Fourth section!</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque fugit labore modi numquam odit similique! Aut fugit necessitatibus provident quaerat reprehenderit? Alias consequatur cum modi nesciunt nihil nobis, optio voluptas.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque dolores impedit maiores minus voluptatem. Alias aliquid corporis deserunt dicta ducimus ea earum eligendi ipsam officia reiciendis rerum sed, suscipit ullam.</p>
             </div>
         </section>
     </div>
 </main>
-<footer></footer>
+<footer class="dark px-3 py-5">
+    <div class="d-flex flex-column justify-content-center">
+        <a class="nav-link mx-auto my-2" href="https://uk.movember.com/donate">Movember logo</a>
+        <a class="btn btn-outline-light my-2 mx-auto" href="https://uk.movember.com/donate" type="button">Donate</a>
+        <a class="btn btn-outline-light my-2 mx-auto" href="https://docs.google.com/forms/d/e/1FAIpQLSfEPoSDQ1OoRSdjL6541xkDNDmtGflhUNkTK2Q5LM98619PSg/viewform?usp=sf_link" type="button">Record a row</a>
+        <ul class="footerList">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#map">Map</a></li>
+            <li><a href="#statRowed">Distance rowed</a></li>
+            <li><a href="#statRaised">Money rowed</a></li>
+            <li><a href="#leaderboards/recent">Recent rows</a></li>
+            <li><a href="#leaderboards/distance">Top rowers - distance</a></li>
+            <li><a href="#leaderboards/time">Top rowers - time</a></li>
+            <li><a href="#about/who">Who we are</a></li>
+            <li><a href="#about/why">Why we are doing this</a></li>
+        </ul>
+    </div>
+</footer>
 </body>
 </html>
