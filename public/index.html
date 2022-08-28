@@ -3,7 +3,6 @@
 <head>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <script crossorigin="anonymous" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="main.js" type="application/javascript"></script>
     <meta charset="UTF-8">
     <title>Chertsey and Guildford Movember Virtual Transatlantic Row</title>
 </head>
@@ -49,9 +48,9 @@
 <main>
     <section class="cover-section w-100" id="home">
         <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column justify-content-end align-items-center flex-grow-1">
-            <main class="px-3 w-75 position-relative">
+            <!--<main class="px-3 w-75 position-relative">
                 <p class="lead text-center pt-5">Guildford and Chertsey are raising money for Movember by teaming up to complete a virtual row of the Atlantic from Senegal to Brazil.</p>
-            </main>
+            </main>-->
         </div>
     </section>
     <div class="contentGrid" id="rowed">
@@ -63,7 +62,7 @@
                 </div>
                 <div class="d-flex flex-column my-5">
                     <button class="btn btn-xl mb-3" href="uk.movember.com" type="button">Donate</button>
-                    <button class="btn" href="uk.movember.com" type="button">Want to add a row? Record it here</button>
+                    <button class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfEPoSDQ1OoRSdjL6541xkDNDmtGflhUNkTK2Q5LM98619PSg/viewform?usp=sf_link" type="button">Want to add a row? Record it here</button>
                 </div>
             </div>
         </section>
@@ -95,89 +94,42 @@
                     </div>
                     <div class="col-12" id="leaderboards/recent">
                         <h3>Most recent</h3>
-                        <table class="table table-responsive w-auto table-ranking mx-auto" id="tRecent">
+                        <table class="table table-responsive w-auto table-ranking mx-auto" >
                             <thead>
                             <tr>
                                 <th colspan="2">Name</th>
+                                <th>Date/time</th>
                                 <th>Distance</th>
-                                <th>Time</th>
+                                <th>Duration</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Sam</td>
-                                <td>5km</td>
-                                <td>Thurs 15:23</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Brody</td>
-                                <td>5km</td>
-                                <td>Wed 12:12</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Laurence</td>
-                                <td>5km</td>
-                                <td>Mon 10:45</td>
-                            </tr>
+                            <tbody id="tRecent">
                             </tbody>
                         </table>
                     </div>
                     <div class="col-12 col-md-6" id="leaderboards/distance">
                         <h3>Distance</h3>
-                        <table class="table table-responsive w-auto table-ranking mx-auto" id="tDistance">
+                        <table class="table table-responsive w-auto table-ranking mx-auto">
                             <thead>
                             <tr>
                                 <th colspan="2">Name</th>
                                 <th>Distance</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Sam</td>
-                                <td>15km</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Stan</td>
-                                <td>11.5km</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Laurence</td>
-                                <td>5km</td>
-                            </tr>
+                            <tbody id="tDistance">
                             </tbody>
                         </table>
                     </div>
                     <div class="col-12 col-md-6" id="leaderboards/time">
                         <h3>Time</h3>
-                        <table class="table table-responsive w-auto table-ranking mx-auto" id="tTime">
+                        <table class="table table-responsive w-auto table-ranking mx-auto" >
                             <thead>
                             <tr>
                                 <th colspan="2">Name</th>
                                 <th>Time</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Sam</td>
-                                <td>01:45:12</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Stan</td>
-                                <td>01:05:17</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Laurence</td>
-                                <td>00:30:12</td>
-                            </tr>
+                            <tbody id="tTime">
                             </tbody>
                         </table>
                     </div>
