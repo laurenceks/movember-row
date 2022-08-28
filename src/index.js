@@ -3,7 +3,8 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 import mapboxgl from "mapbox-gl";
 import {MAPBOX_ACCESS_TOKEN} from "./tokens.js";
-import * as turf from "@turf/turf";
+import length from "@turf/length";
+import along from "@turf/along";
 import {CountUp} from "countup.js";
 
 const init = async (e) => {
@@ -71,23 +72,9 @@ const init = async (e) => {
     const countUpRowed = new CountUp("statRowed", sheetsData["Total distance"], {decimalPlaces:0, duration:5, suffix: "km"});
     const countUpRaised = new CountUp("statRaised", sheetsData["Amount raised"], {decimalPlaces:0, duration:5, prefix:"£"});
 
-    const scrolledIntoFrameFunctionMap = {
-        "statRowed" : () => countUpRowed.start(),
-        "statRaised" : () => countUpRaised.start(),
-    };
-
-    const scrolledIntoFrame = new IntersectionObserver((entries) => {
-        if(entries[0].isIntersecting){
-            scrolledIntoFrameFunctionMap[entries[0].target.id]();
-        }
-    }, {threshold: [1]});
-
-    scrolledIntoFrame.observe(document.querySelector("#statRowed"));
-    scrolledIntoFrame.observe(document.querySelector("#statRaised"));
-
     const formatSheetValue = (val, type) => {
         if (type === "dateTime") {
-            const d = new Date(val);
+            const d = new Date(val.replaceAll("-", "/"));
             if (Date.now() - d.getTime() > 518400000) {
                 //over a week ago
                 return Intl.DateTimeFormat("en-GB", {
@@ -186,7 +173,7 @@ const init = async (e) => {
         },
     };
 
-    const totalDistanceInKilometres = turf.length(route.data);
+    const totalDistanceInKilometres = length(route.data);
 
     //route from start to current total distance rowed
     const progressRoute = {
@@ -196,7 +183,7 @@ const init = async (e) => {
             geometry: {
                 type: "LineString",
                 coordinates: [coordinates.start.arrayLongLat,
-                    turf.along(route.data, sheetsData["Total distance"],
+                    along(route.data, sheetsData["Total distance"],
                         {units: "kilometers"}).geometry.coordinates],
             },
         },
@@ -275,14 +262,46 @@ const init = async (e) => {
         markerIcon.className = "icon p-1 fas fa-sailboat";
         const markerText = document.createElement("p");
         markerText.className = "markerText p-1";
+        markerText.id = "mapCurrentDistance";
         markerText.innerText = `${distanceRowedFormattedString} ${Math.round(
             (sheetsData["Total distance"] / totalDistanceInKilometres) * 100)}%`;
         newMarker.appendChild(markerIcon);
         newMarker.appendChild(markerText);
         new mapboxgl.Marker(newMarker).setLngLat(progressMarker.geometry.coordinates).addTo(map);
+
         zoomToFit();
         //on window resize, fit the map to the screen
         window.addEventListener("resize", zoomToFit);
+
+        const animateMap = () => {
+            let absoluteProgress = 0;
+            const progressAnimation = () => {
+                absoluteProgress +=0.01;
+                console.log(absoluteProgress);
+                if(absoluteProgress<1){
+                    requestAnimationFrame(progressAnimation);
+                }
+            };
+            progressAnimation();
+        };
+
+        const countUpMarker = new CountUp("mapCurrentDistance", sheetsData["Total distance"], {decimalPlaces:2, duration:5, formattingFn: (x) => `${x}km ${Math.round(
+            (x / totalDistanceInKilometres) * 100)}%`});
+        const scrolledIntoFrameFunctionMap = {
+            "statRowed" : countUpRowed.start,
+            "statRaised" : countUpRaised.start,
+            "map" : () => {countUpMarker.start();animateMap();},
+        };
+
+        const scrolledIntoFrame = new IntersectionObserver((entries) => {
+            if(entries[0].isIntersecting){
+                scrolledIntoFrameFunctionMap[entries[0].target.id]();
+            }
+        }, {threshold: [1]});
+
+        scrolledIntoFrame.observe(document.querySelector("#statRowed"));
+        scrolledIntoFrame.observe(document.querySelector("#statRaised"));
+        scrolledIntoFrame.observe(document.querySelector("#map"));
     });
 };
 
