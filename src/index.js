@@ -69,8 +69,16 @@ const init = async (e) => {
 
     //set stats
     const distanceRowedFormattedString = `${sheetsData["Total distance"].toLocaleString("en-GB")}km`;
-    const countUpRowed = new CountUp("statRowed", sheetsData["Total distance"], {decimalPlaces:0, duration:5, suffix: "km"});
-    const countUpRaised = new CountUp("statRaised", sheetsData["Amount raised"], {decimalPlaces:0, duration:5, prefix:"£"});
+    const countUpRowed = new CountUp("statRowed", sheetsData["Total distance"], {
+        decimalPlaces: 0,
+        duration: 5,
+        suffix: "km",
+    });
+    const countUpRaised = new CountUp("statRaised", sheetsData["Amount raised"], {
+        decimalPlaces: 0,
+        duration: 5,
+        prefix: "£",
+    });
 
     const formatSheetValue = (val, type) => {
         if (type === "dateTime") {
@@ -107,13 +115,11 @@ const init = async (e) => {
         id: "tRecent",
         key: "recent",
         types: ["dateTime", "distance", "duration"],
-    },
-    {
+    }, {
         id: "tDistance",
         key: "distance",
         type: "distance",
-    },
-    {
+    }, {
         id: "tTime",
         key: "time",
         type: "duration",
@@ -175,16 +181,14 @@ const init = async (e) => {
 
     const totalDistanceInKilometres = length(route.data);
 
-    //route from start to current total distance rowed
+    //route from start to current total distance rowed - starts with 0 distance initially
     const progressRoute = {
         type: "geojson",
         data: {
             type: "Feature",
             geometry: {
                 type: "LineString",
-                coordinates: [coordinates.start.arrayLongLat,
-                    along(route.data, sheetsData["Total distance"],
-                        {units: "kilometers"}).geometry.coordinates],
+                coordinates: [coordinates.start.arrayLongLat, coordinates.start.arrayLongLat],
             },
         },
     };
@@ -196,7 +200,7 @@ const init = async (e) => {
             type: "Feature",
             geometry: {
                 type: "LineString",
-                coordinates: [[...progressRoute.data.geometry.coordinates].pop(), coordinates.end.arrayLongLat],
+                coordinates: [coordinates.start.arrayLongLat, coordinates.end.arrayLongLat],
             },
         },
     };
@@ -222,10 +226,12 @@ const init = async (e) => {
         interactive: false,
     });
 
-    const zoomToFit = () => map.fitBounds([coordinates.end.arrayLongLat, coordinates.start.arrayLongLat], {padding: 75, offset: [0,10]});
+    const zoomToFit = () => map.fitBounds([coordinates.end.arrayLongLat, coordinates.start.arrayLongLat], {
+        padding: 75,
+        offset: [0, 10],
+    });
 
     map.on("load", () => {
-        map.addSource("route", route);
         map.addSource("progressRoute", progressRoute);
         map.addSource("remainingRoute", remainingRoute);
         map.addLayer({
@@ -267,34 +273,57 @@ const init = async (e) => {
             (sheetsData["Total distance"] / totalDistanceInKilometres) * 100)}%`;
         newMarker.appendChild(markerIcon);
         newMarker.appendChild(markerText);
-        new mapboxgl.Marker(newMarker).setLngLat(progressMarker.geometry.coordinates).addTo(map);
+        const progressMarkerMapBoxGl = new mapboxgl.Marker(newMarker).setLngLat(progressMarker.geometry.coordinates).addTo(map);
 
         zoomToFit();
         //on window resize, fit the map to the screen
         window.addEventListener("resize", zoomToFit);
 
-        const animateMap = () => {
-            let absoluteProgress = 0;
-            const progressAnimation = () => {
-                absoluteProgress +=0.01;
-                console.log(absoluteProgress);
-                if(absoluteProgress<1){
+        const mapAnimationDurationInMs = 3000;
+
+        const animateMap = (durationInMs = mapAnimationDurationInMs) => {
+
+            let startTime = null;
+            const progressAnimation = (timestamp) => {
+                if (!startTime) {
+                    startTime = timestamp;
+                }
+                const runtime = timestamp - startTime;
+                const progressPercent = runtime / durationInMs;
+
+                //calculate new coordinates based on current progress
+                const progressRouteCoordinates= [coordinates.start.arrayLongLat, along(route.data, sheetsData["Total distance"]*progressPercent,{units: "kilometers"}).geometry.coordinates];
+                const remainingRouteCoordinates= [[...progressRouteCoordinates].pop(), coordinates.end.arrayLongLat];
+
+                //update marker and lines
+                progressMarkerMapBoxGl.setLngLat([...progressRouteCoordinates].pop());
+                map.getSource("progressRoute").setData({...progressRoute.data, geometry: {...progressRoute.data.geometry, coordinates: progressRouteCoordinates}});
+                map.getSource("remainingRoute").setData({...remainingRoute.data, geometry: {...remainingRoute.data.geometry, coordinates: remainingRouteCoordinates}});
+
+                //if not yet complete, request a new frame
+                if (progressPercent < 1) {
                     requestAnimationFrame(progressAnimation);
                 }
             };
-            progressAnimation();
+            requestAnimationFrame(progressAnimation);
         };
 
-        const countUpMarker = new CountUp("mapCurrentDistance", sheetsData["Total distance"], {decimalPlaces:2, duration:5, formattingFn: (x) => `${x}km ${Math.round(
-            (x / totalDistanceInKilometres) * 100)}%`});
+        const countUpMarker = new CountUp("mapCurrentDistance", sheetsData["Total distance"], {
+            decimalPlaces: 2,
+            duration: mapAnimationDurationInMs/1000,
+            formattingFn: (x) => `${x}km ${Math.round((x / totalDistanceInKilometres) * 100)}%`,
+        });
         const scrolledIntoFrameFunctionMap = {
-            "statRowed" : countUpRowed.start,
-            "statRaised" : countUpRaised.start,
-            "map" : () => {countUpMarker.start();animateMap();},
+            "statRowed": countUpRowed.start,
+            "statRaised": countUpRaised.start,
+            "map": () => {
+                countUpMarker.start();
+                animateMap();
+            },
         };
 
         const scrolledIntoFrame = new IntersectionObserver((entries) => {
-            if(entries[0].isIntersecting){
+            if (entries[0].isIntersecting) {
                 scrolledIntoFrameFunctionMap[entries[0].target.id]();
             }
         }, {threshold: [1]});
