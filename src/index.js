@@ -5,6 +5,7 @@ import mapboxgl from "mapbox-gl";
 import {MAPBOX_ACCESS_TOKEN} from "./tokens.js";
 import length from "@turf/length";
 import along from "@turf/along";
+import bbox from "@turf/bbox";
 import {CountUp} from "countup.js";
 import BezierEasing from "bezier-easing";
 
@@ -234,7 +235,7 @@ const init = async (e) => {
         interactive: false,
     });
 
-    const zoomToFit = () => map.fitBounds([coordinates.end.arrayLongLat, coordinates.start.arrayLongLat], {
+    const zoomToFit = () => map.fitBounds(bbox(route.data), {
         padding: 75,
         offset: [0, 10],
     });
