@@ -235,6 +235,13 @@ img.img-circle{
   border: 3px solid #000000;
 }
 
+div.peopleWrap:nth-of-type(2n) > div.peopleContainer{
+  @extend .flex-sm-row-reverse;
+  > p {
+    @extend .text-sm-end
+  }
+}
+
 ul.footerList{
   @extend .p-2;
   list-style: none;
