@@ -214,7 +214,7 @@ div.progressMarker {
   align-items: center;
 }
 
-div.progressMarker > svg{
+div.progressMarker.rightToLeft > svg{
   transform: scaleX(-1);
 }
 
@@ -228,6 +228,7 @@ p.markerText {
   font-size: 20px;
   color: #ffffff;
   text-align: center;
+  margin: 0;
 }
 
 
