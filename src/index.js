@@ -5,6 +5,9 @@ import {MAPBOX_ACCESS_TOKEN} from "./tokens.js";
 import length from "@turf/length";
 import along from "@turf/along";
 import bbox from "@turf/bbox";
+import midpoint from "@turf/midpoint";
+import greatCircle from "@turf/great-circle";
+import linestring from "turf-linestring";
 import {CountUp} from "countup.js";
 import BezierEasing from "bezier-easing";
 
@@ -15,7 +18,7 @@ window.addEventListener("hashchange", (e) => {
 });
 */
 
-const init = async (e) => {
+const init = async () => {
 
     const sheetId = "1_qii19Q1Aa81zD1bPBEPS-ezK9L4WX_LEGSHekWERRM";
     const base = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?`;
@@ -152,19 +155,20 @@ const init = async (e) => {
     //prepare map
     const coordinates = {
         start: {
-            lat: 28.0830060,
             long: -17.1104943,
+            lat: 28.0830060,
             label: "San Sabastian de la Gomera",
         },
         end: {
-            lat: 17.0092287,
             long: -61.7642905,
+            lat: 17.0092287,
             label: "English Harbour, Antigua",
         },
-        mid: {
-            lat: 3.648708,
-            long: -26.206182,
-        },
+    };
+
+    const coordinatesDirection = {
+        horizontal: coordinates.start.long >= coordinates.end.long ? "rightToLeft" : "leftToRight",
+        vertical: coordinates.start.lat >= coordinates.end.lat ? "down" : "up",
     };
 
     //create more convenient properties
@@ -178,17 +182,10 @@ const init = async (e) => {
     //overall route
     const route = {
         type: "geojson",
-        data: {
-            type: "Feature",
-            geometry: {
-                type: "LineString",
-                coordinates: [coordinates.start.arrayLongLat, coordinates.end.arrayLongLat],
-            },
-        },
+        data: greatCircle(coordinates.start.arrayLongLat, coordinates.end.arrayLongLat),
     };
 
     const totalDistanceInKilometres = length(route.data);
-
     //route from start to current total distance rowed - starts with 0 distance initially
     const progressRoute = {
         type: "geojson",
@@ -201,16 +198,10 @@ const init = async (e) => {
         },
     };
 
-    //route form current position to end
+    //route from current position to end
     const remainingRoute = {
         type: "geojson",
-        data: {
-            type: "Feature",
-            geometry: {
-                type: "LineString",
-                coordinates: [coordinates.start.arrayLongLat, coordinates.end.arrayLongLat],
-            },
-        },
+        data: greatCircle(coordinates.start.arrayLongLat, coordinates.end.arrayLongLat),
     };
 
     const progressMarker = {
@@ -223,13 +214,12 @@ const init = async (e) => {
     };
 
     mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
-
     //initialise map
     const map = new mapboxgl.Map({
         container: "mapDiv",
         style: "mapbox://styles/laurenceks/cl7bgee30002n15quqh65ph2w",
         projection: "mercator",
-        center: [coordinates.mid.long, coordinates.mid.lat],
+        center: midpoint(coordinates.start.arrayLongLat, coordinates.end.arrayLongLat).geometry.coordinates,
         zoom: 4,
         interactive: false,
     });
@@ -272,8 +262,8 @@ const init = async (e) => {
         new mapboxgl.Marker({color: "#FFFFFF"}).setLngLat(coordinates.end.LngLat).addTo(map);
         const newMarker = document.createElement("div");
         const markerIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        const markerPath = document.createElementNS("http://www.w3.org/2000/svg","path");
-        newMarker.className = "progressMarker p-2";
+        const markerPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        newMarker.className = `progressMarker p-2 ${coordinatesDirection.horizontal} ${coordinatesDirection.vertical}`;
         markerIcon.setAttribute("stroke", "currentColor");
         markerIcon.setAttribute("fill", "currentColor");
         markerIcon.setAttribute("stroke-width", "0");
@@ -281,7 +271,8 @@ const init = async (e) => {
         markerIcon.setAttribute("width", "50");
         markerIcon.setAttribute("height", "50");
         markerIcon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-        markerPath.setAttribute("d", "M8.5 14.5L4 19l1.5 1.5L9 17h2l-2.5-2.5zM15 1c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 20.01L18 24l-2.99-3.01V19.5l-7.1-7.09c-.31.05-.61.07-.91.07v-2.16c1.66.03 3.61-.87 4.67-2.04l1.4-1.55c.19-.21.43-.38.69-.5.29-.14.62-.23.96-.23h.03C15.99 6.01 17 7.02 17 8.26v5.75c0 .84-.35 1.61-.92 2.16l-3.58-3.58v-2.27c-.63.52-1.43 1.02-2.29 1.39L16.5 18H18l3 3.01z");
+        markerPath.setAttribute("d",
+            "M8.5 14.5L4 19l1.5 1.5L9 17h2l-2.5-2.5zM15 1c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 20.01L18 24l-2.99-3.01V19.5l-7.1-7.09c-.31.05-.61.07-.91.07v-2.16c1.66.03 3.61-.87 4.67-2.04l1.4-1.55c.19-.21.43-.38.69-.5.29-.14.62-.23.96-.23h.03C15.99 6.01 17 7.02 17 8.26v5.75c0 .84-.35 1.61-.92 2.16l-3.58-3.58v-2.27c-.63.52-1.43 1.02-2.29 1.39L16.5 18H18l3 3.01z");
         markerIcon.appendChild(markerPath);
         // markerIcon.className = "progressMarkerIcon";
         const markerText = document.createElement("p");
@@ -291,8 +282,8 @@ const init = async (e) => {
             (sheetsData["Total distance"] / totalDistanceInKilometres) * 100)}%`;
         newMarker.appendChild(markerIcon);
         newMarker.appendChild(markerText);
-        const progressMarkerMapBoxGl = new mapboxgl.Marker(newMarker).setLngLat(progressMarker.geometry.coordinates).addTo(map);
-
+        const progressMarkerMapBoxGl = new mapboxgl.Marker(newMarker).setLngLat(progressMarker.geometry.coordinates)
+            .addTo(map);
         zoomToFit();
         //on window resize, fit the map to the screen
         window.addEventListener("resize", zoomToFit);
@@ -312,13 +303,32 @@ const init = async (e) => {
                 const progressPercent = easing(runtime / durationInMs);
 
                 //calculate new coordinates based on current progress
-                const progressRouteCoordinates= [coordinates.start.arrayLongLat, along(route.data, sheetsData["Total distance"]*progressPercent,{units: "kilometers"}).geometry.coordinates];
-                const remainingRouteCoordinates= [[...progressRouteCoordinates].pop(), coordinates.end.arrayLongLat];
+                const progressMarkerCoordinates = along(linestring(route.data.geometry.coordinates),
+                    sheetsData["Total distance"] * progressPercent, {units: "kilometers"}).geometry.coordinates;
 
+                const progressRouteCoordinates = progressMarkerCoordinates[0] === coordinates.start.long && progressMarkerCoordinates[1] === coordinates.start.lat ?
+                    [coordinates.start.arrayLongLat, progressMarkerCoordinates] :
+                    greatCircle(coordinates.start.arrayLongLat, progressMarkerCoordinates).geometry.coordinates;
+                const remainingRouteCoordinates = greatCircle([...progressRouteCoordinates].pop(),
+                    coordinates.end.arrayLongLat).geometry.coordinates;
                 //update marker and lines
-                progressMarkerMapBoxGl.setLngLat([...progressRouteCoordinates].pop());
-                map.getSource("progressRoute").setData({...progressRoute.data, geometry: {...progressRoute.data.geometry, coordinates: progressRouteCoordinates}});
-                map.getSource("remainingRoute").setData({...remainingRoute.data, geometry: {...remainingRoute.data.geometry, coordinates: remainingRouteCoordinates}});
+                progressMarkerMapBoxGl.setLngLat(progressMarkerCoordinates);
+                map.getSource("progressRoute")
+                    .setData({
+                        ...progressRoute.data,
+                        geometry: {
+                            ...progressRoute.data.geometry,
+                            coordinates: progressRouteCoordinates,
+                        },
+                    });
+                map.getSource("remainingRoute")
+                    .setData({
+                        ...remainingRoute.data,
+                        geometry: {
+                            ...remainingRoute.data.geometry,
+                            coordinates: remainingRouteCoordinates,
+                        },
+                    });
 
                 //if not yet complete, request a new frame
                 if (progressPercent < 1) {
@@ -329,7 +339,7 @@ const init = async (e) => {
         };
 
         const countUpMarker = new CountUp("mapCurrentDistance", sheetsData["Total distance"], {
-            duration: mapAnimationDurationInMs/1000,
+            duration: mapAnimationDurationInMs / 1000,
             formattingFn: (x) => `${x}km ${Math.round((x / totalDistanceInKilometres) * 100)}%`,
         });
         const scrolledIntoFrameFunctionMap = {
