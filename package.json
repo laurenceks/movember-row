@@ -38,7 +38,6 @@
     "webpack-dev-server": "^4.10.0"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.1.2",
     "@turf/along": "^6.5.0",
     "@turf/bbox": "^6.5.0",
     "@turf/great-circle": "^6.5.0",
