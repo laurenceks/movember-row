@@ -9,6 +9,7 @@ $table-color: $light;
 $enable-rounded: false;
 $btn-border-width: 3px;
 $btn-font-family: $headings-font-family;
+$link-color: inherit;
 
 @import "../node_modules/bootstrap/scss/variables";
 @import "../node_modules/bootstrap/scss/bootstrap-utilities";
@@ -91,6 +92,15 @@ section.cover-section {
   flex-direction: column; //IMPORTANT - lets children grow to 100% of height
 }
 
+sup > a {
+  text-decoration: none;
+}
+
+sup.display-1-sup{
+  font-size: 0.5em;
+  top: -1.25em;
+}
+
 @media (max-width: 600px) and (orientation: portrait) {
 
   section.cover-section {
@@ -143,7 +153,7 @@ div.contentGrid > section {
   }
 }
 
-div.contentGrid > section:nth-of-type(2n+3) {
+div.contentGrid > section:nth-of-type(2n+4) {
   //after initial sections, alternate with light background and dark components
   @extend .light;
 
