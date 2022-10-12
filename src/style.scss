@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Overpass:ital,wght@0,400;1,300&display=swap');
+@import "fonts/fonts.css";
 @import "../node_modules/bootstrap/scss/functions";
 
 $headings-font-family: "Anton";
@@ -22,6 +22,7 @@ $btn-font-family: $headings-font-family;
 @import "../node_modules/bootstrap/scss/root";
 @import "../node_modules/bootstrap/scss/navbar";
 @import "../node_modules/bootstrap/scss/transitions";
+@import "../node_modules/bootstrap/scss/modal";
 
 html, body {
   @extend .h-100, .w-100;
