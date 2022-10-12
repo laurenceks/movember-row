@@ -9,7 +9,6 @@ $table-color: $light;
 $enable-rounded: false;
 $btn-border-width: 3px;
 $btn-font-family: $headings-font-family;
-$link-color: inherit;
 
 @import "../node_modules/bootstrap/scss/variables";
 @import "../node_modules/bootstrap/scss/bootstrap-utilities";
@@ -37,7 +36,9 @@ html, body {
     letter-spacing: -0.5px
   }
 }
-
+a{
+  color: inherit !important;
+}
 .dark {
   background-color: #000000;
   border-color: #000000;
