@@ -10,6 +10,7 @@ import greatCircle from "@turf/great-circle";
 import linestring from "turf-linestring";
 import {CountUp} from "countup.js";
 import BezierEasing from "bezier-easing";
+import getCookieConsent from "./js/getCookieConsent.js";
 
 //TODO - hide # from URL
 /*
@@ -18,8 +19,7 @@ window.addEventListener("hashchange", (e) => {
 });
 */
 
-const init = async () => {
-
+const init = async () =>{
     const sheetId = "1_qii19Q1Aa81zD1bPBEPS-ezK9L4WX_LEGSHekWERRM";
     const base = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?`;
     const sheetName = "Statistics";
@@ -311,7 +311,7 @@ const init = async () => {
                     greatCircle(coordinates.start.arrayLongLat, progressMarkerCoordinates).geometry.coordinates;
                 const remainingRouteCoordinates = greatCircle([...progressRouteCoordinates].pop(),
                     coordinates.end.arrayLongLat).geometry.coordinates;
-                //update marker and lines
+                    //update marker and lines
                 progressMarkerMapBoxGl.setLngLat(progressMarkerCoordinates);
                 map.getSource("progressRoute")
                     .setData({
@@ -356,7 +356,7 @@ const init = async () => {
                 animateMap();
             },
         };
-        //TODO add fallback for older browsers/systems - maybe check if IntersectionObserver exists and if not just fire the animations?
+            //TODO add fallback for older browsers/systems - maybe check if IntersectionObserver exists and if not just fire the animations?
         const scrolledIntoFrame = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting) {
                 scrolledIntoFrameFunctionMap[entries[0].target.id]();
@@ -370,4 +370,4 @@ const init = async () => {
     });
 };
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("DOMContentLoaded", () =>getCookieConsent(init));
