@@ -37,9 +37,11 @@ html, body {
     letter-spacing: -0.5px
   }
 }
-a{
+
+a {
   color: inherit !important;
 }
+
 .dark {
   background-color: #000000;
   border-color: #000000;
@@ -98,7 +100,7 @@ sup > a {
   text-decoration: none;
 }
 
-sup.display-1-sup{
+sup.display-1-sup {
   font-size: 0.5em;
   top: -1.25em;
 }
@@ -226,7 +228,7 @@ div.progressMarker {
   align-items: center;
 }
 
-div.progressMarker.rightToLeft > svg{
+div.progressMarker.rightToLeft > svg {
   transform: scaleX(-1);
 }
 
@@ -244,31 +246,41 @@ p.markerText {
 }
 
 
-img.img-circle{
-  @extend .p-1;
-  width: 250px;
-  height: 250px;
-  object-fit: cover;
+div.img-circle-wrap, img.img-circle {
   border-radius: 50%;
-  border: 3px solid #000000;
-  background-image: url("data:image/svg+xml,%3Csvg stroke='currentColor' fill='currentColor' stroke-width='0' viewBox='0 0 496 512' height='1em' width='1em' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z'%3E%3C/path%3E%3C/svg%3E");
-  background-size: cover;
 }
 
-div.peopleWrap:nth-of-type(2n) > div.peopleContainer{
+div.img-circle-wrap {
+  width: 250px;
+  height: 250px;
+  border: 3px solid #000000;
+  object-fit: cover;
+  background-image: url("data:image/svg+xml,%3Csvg stroke='currentColor' fill='currentColor' stroke-width='0' viewBox='0 0 496 512' height='1em' width='1em' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z'%3E%3C/path%3E%3C/svg%3E");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+img.img-circle {
+  width: 100%;
+  height: 100%;
+  border: 3px solid #ffffff;
+}
+
+div.peopleWrap:nth-of-type(2n) > div.peopleContainer {
   @extend .flex-sm-row-reverse;
+
   > p {
     @extend .text-sm-end
   }
 }
 
-ul.footerList{
+ul.footerList {
   @extend .p-2;
   list-style: none;
   text-align: center;
 }
 
-ul.footerList >li > a{
+ul.footerList > li > a {
   @extend .py-2;
   color: $light;
   text-decoration: none;
