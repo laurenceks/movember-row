@@ -19,7 +19,7 @@ window.addEventListener("hashchange", (e) => {
 });
 */
 
-const init = async () =>{
+const init = async () => {
     const sheetId = "1_qii19Q1Aa81zD1bPBEPS-ezK9L4WX_LEGSHekWERRM";
     const base = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?`;
     const sheetName = "Statistics";
@@ -311,7 +311,7 @@ const init = async () =>{
                     greatCircle(coordinates.start.arrayLongLat, progressMarkerCoordinates).geometry.coordinates;
                 const remainingRouteCoordinates = greatCircle([...progressRouteCoordinates].pop(),
                     coordinates.end.arrayLongLat).geometry.coordinates;
-                    //update marker and lines
+                //update marker and lines
                 progressMarkerMapBoxGl.setLngLat(progressMarkerCoordinates);
                 map.getSource("progressRoute")
                     .setData({
@@ -356,18 +356,23 @@ const init = async () =>{
                 animateMap();
             },
         };
-            //TODO add fallback for older browsers/systems - maybe check if IntersectionObserver exists and if not just fire the animations?
+
         const scrolledIntoFrame = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting) {
                 scrolledIntoFrameFunctionMap[entries[0].target.id]();
             }
         }, {threshold: [1]});
 
-        //TODO trigger events if on load item in view
-        scrolledIntoFrame.observe(document.querySelector("#statRowed"));
-        scrolledIntoFrame.observe(document.querySelector("#statRaised"));
-        scrolledIntoFrame.observe(document.querySelector("#map"));
+        Object.keys(scrolledIntoFrameFunctionMap).forEach((x) => {
+            const el = document.querySelector(`#${x}`);
+            const elBox = el.getBoundingClientRect();
+            if (elBox.top >= 0 && elBox.left >= 0 && elBox.right <= (window.innerWidth || document.documentElement.clientWidth) && elBox.bottom <= (window.innerHeight || document.documentElement.clientHeight)) {
+                scrolledIntoFrameFunctionMap[x]();
+            } else {
+                scrolledIntoFrame.observe(el);
+            }
+        });
     });
 };
 
-document.addEventListener("DOMContentLoaded", () =>getCookieConsent(init));
+document.addEventListener("DOMContentLoaded", () => getCookieConsent(init));
