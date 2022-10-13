@@ -1,6 +1,6 @@
 /.idea
 /node_modules
-/src/tokens.js
+/src/js/tokens.js
 /img
 /dist
 /src/style.css

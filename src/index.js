@@ -1,7 +1,7 @@
 import "./style.scss";
 import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from "mapbox-gl";
-import {MAPBOX_ACCESS_TOKEN} from "./tokens.js";
+import {MAPBOX_ACCESS_TOKEN} from "./js/tokens.js";
 import length from "@turf/length";
 import along from "@turf/along";
 import bbox from "@turf/bbox";
@@ -292,7 +292,7 @@ const init = async () => {
 
         const animateMap = (durationInMs = mapAnimationDurationInMs) => {
             //make sure the event listener only fires once
-            scrolledIntoFrame.unobserve(document.querySelector("#map"));
+            scrolledIntoView.unobserve(document.querySelector("#map"));
             const easing = BezierEasing(0.16, 1, 0.3, 1); //easeOutExpo to match countUp
             let startTime = null;
             const progressAnimation = (timestamp) => {
@@ -342,13 +342,13 @@ const init = async () => {
             duration: mapAnimationDurationInMs / 1000,
             formattingFn: (x) => `${x}km ${Math.round((x / totalDistanceInKilometres) * 100)}%`,
         });
-        const scrolledIntoFrameFunctionMap = {
+        const scrolledIntoViewFunctionMap = {
             "statRowed": () => {
-                scrolledIntoFrame.unobserve(document.querySelector("#statRowed"));
+                scrolledIntoView.unobserve(document.querySelector("#statRowed"));
                 countUpRowed.start();
             },
             "statRaised": () => {
-                scrolledIntoFrame.unobserve(document.querySelector("#statRaised"));
+                scrolledIntoView.unobserve(document.querySelector("#statRaised"));
                 countUpRaised.start();
             },
             "map": () => {
@@ -357,19 +357,19 @@ const init = async () => {
             },
         };
 
-        const scrolledIntoFrame = new IntersectionObserver((entries) => {
+        const scrolledIntoView = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting) {
-                scrolledIntoFrameFunctionMap[entries[0].target.id]();
+                scrolledIntoViewFunctionMap[entries[0].target.id]();
             }
         }, {threshold: [1]});
 
-        Object.keys(scrolledIntoFrameFunctionMap).forEach((x) => {
+        Object.keys(scrolledIntoViewFunctionMap).forEach((x) => {
             const el = document.querySelector(`#${x}`);
             const elBox = el.getBoundingClientRect();
             if (elBox.top >= 0 && elBox.left >= 0 && elBox.right <= (window.innerWidth || document.documentElement.clientWidth) && elBox.bottom <= (window.innerHeight || document.documentElement.clientHeight)) {
-                scrolledIntoFrameFunctionMap[x]();
+                scrolledIntoViewFunctionMap[x]();
             } else {
-                scrolledIntoFrame.observe(el);
+                scrolledIntoView.observe(el);
             }
         });
     });
