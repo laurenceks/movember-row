@@ -1,4 +1,5 @@
-import setCountUps from "./setCountUps.js";
+/* eslint-disable no-use-before-define */
+import setCountUps from "./setCountUps";
 
 const setScrolledIntoView = ({
     animateMap,
@@ -7,34 +8,52 @@ const setScrolledIntoView = ({
     progressMarkerMapBoxGl,
     sheetsData,
 }) => {
-    const scrolledIntoView = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-            scrolledIntoViewFunctionMap[entries[0].target.id]();
-        }
-    }, {threshold: [1]});
+    const scrolledIntoView = new IntersectionObserver(
+        (entries) => {
+            if (entries[0].isIntersecting) {
+                scrolledIntoViewFunctionMap[entries[0].target.id]();
+            }
+        },
+        { threshold: [1] }
+    );
 
-    const {countUpRowed, countUpRaised, countUpMarker} = setCountUps(sheetsData, mapAnimationDurationInMs);
+    const { countUpRowed, countUpRaised, countUpMarker } = setCountUps(
+        sheetsData,
+        mapAnimationDurationInMs
+    );
 
     const scrolledIntoViewFunctionMap = {
-        "statRowed": () => {
+        statRowed: () => {
             scrolledIntoView.unobserve(document.querySelector("#statRowed"));
             countUpRowed.start();
         },
-        "statRaised": () => {
+        statRaised: () => {
             scrolledIntoView.unobserve(document.querySelector("#statRaised"));
             countUpRaised.start();
         },
-        "map": () => {
+        map: () => {
             countUpMarker.start();
-            animateMap(map, sheetsData["Total distance"], scrolledIntoView, mapAnimationDurationInMs,
-                progressMarkerMapBoxGl);
+            animateMap(
+                map,
+                progressMarkerMapBoxGl,
+                sheetsData["Total distance"],
+                scrolledIntoView,
+                mapAnimationDurationInMs
+            );
         },
     };
 
     Object.keys(scrolledIntoViewFunctionMap).forEach((x) => {
         const el = document.querySelector(`#${x}`);
         const elBox = el.getBoundingClientRect();
-        if (elBox.top >= 0 && elBox.left >= 0 && elBox.right <= (window.innerWidth || document.documentElement.clientWidth) && elBox.bottom <= (window.innerHeight || document.documentElement.clientHeight)) {
+        if (
+            elBox.top >= 0 &&
+            elBox.left >= 0 &&
+            elBox.right <=
+                (window.innerWidth || document.documentElement.clientWidth) &&
+            elBox.bottom <=
+                (window.innerHeight || document.documentElement.clientHeight)
+        ) {
             scrolledIntoViewFunctionMap[x]();
         } else {
             scrolledIntoView.observe(el);

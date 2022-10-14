@@ -1,18 +1,21 @@
 import mapboxgl from "mapbox-gl";
-import {MAPBOX_ACCESS_TOKEN} from "./tokens.js";
 import midpoint from "@turf/midpoint";
-import {coordinates} from "./geoData.js";
-import loadMap from "./loadMap.js";
+import MAPBOX_ACCESS_TOKEN from "./tokens";
+import { coordinates } from "./geoData";
+import loadMap from "./loadMap";
 
 const initMap = (sheetsData, mapAnimationDurationInMs = 3000) => {
     mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
 
-    //initialise map
+    // initialise map
     const map = new mapboxgl.Map({
         container: "mapDiv",
         style: "mapbox://styles/laurenceks/cl7bgee30002n15quqh65ph2w",
         projection: "mercator",
-        center: midpoint(coordinates.start.arrayLongLat, coordinates.end.arrayLongLat).geometry.coordinates,
+        center: midpoint(
+            coordinates.start.arrayLongLat,
+            coordinates.end.arrayLongLat
+        ).geometry.coordinates,
         zoom: 4,
         interactive: false,
     });

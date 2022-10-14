@@ -1,9 +1,9 @@
 import Cookies from "js-cookie";
-import {Modal} from "bootstrap";
+import { Modal } from "bootstrap";
 
 const getCookieConsent = (callback) => {
     if (!Cookies.get("cookie-consent-given")) {
-        //no cookie for consenting to cookies
+        // no cookie for consenting to cookies
         const cookieModalElement = document.getElementById("cookie-modal");
         const cookieModal = new Modal(cookieModalElement, {
             backdrop: "static",
@@ -17,7 +17,7 @@ const getCookieConsent = (callback) => {
             });
             callback();
         });
-    }else{
+    } else {
         callback();
     }
 };
