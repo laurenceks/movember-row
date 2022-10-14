@@ -24,6 +24,10 @@ $btn-font-family: $headings-font-family;
 @import "../node_modules/bootstrap/scss/transitions";
 @import "../node_modules/bootstrap/scss/modal";
 
+body{
+  overflow-x: hidden;
+}
+
 html, body {
   @extend .h-100, .w-100;
   --bs-body-font-family: "Overpass";
