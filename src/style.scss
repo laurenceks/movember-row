@@ -24,7 +24,7 @@ $btn-font-family: $headings-font-family;
 @import "../node_modules/bootstrap/scss/transitions";
 @import "../node_modules/bootstrap/scss/modal";
 
-body{
+body {
   overflow-x: hidden;
 }
 
@@ -270,7 +270,7 @@ img.img-circle {
   border: 3px solid #ffffff;
 }
 
-div.peopleWrap:nth-of-type(2n) > div.peopleContainer {
+rower-bio:nth-of-type(2n) > div.peopleWrap > div.peopleContainer {
   @extend .flex-sm-row-reverse;
 
   > p {
