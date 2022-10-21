@@ -2,6 +2,7 @@
 /node_modules
 /src/js/tokens.js
 /img
+/public/img
 /dist
 /src/style.css
 /src/style.css.map
