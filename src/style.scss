@@ -91,7 +91,7 @@ div.contentGrid > section:not(.cover-section, .map-section) {
 
 section.cover-section {
   @extend .dark;
-  background-image: url("../public/img/cover.jpg");
+  background-image: url("../public/img/cover/cover.jpg");
   min-height: 690px;
   background-position: top center;
   background-size: cover;
@@ -112,7 +112,7 @@ sup.display-1-sup {
 @media (max-width: 600px) and (orientation: portrait) {
 
   section.cover-section {
-    background-image: url("../public/img/cover-sm.jpg");
+    background-image: url("../public/img/cover/cover-sm.jpg");
     min-height: 500px;
   }
 }
