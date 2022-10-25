@@ -157,8 +157,17 @@ thead {
 div.contentGrid > section {
   //normal is dark
   .btn {
-    @extend .btn-outline-light
+    @extend .btn-outline-light;
   }
+  .btn:hover, .btn:focus,.btn:focus-within, .btn:active {
+    @extend .text-dark;
+    color: $dark !important;
+  }
+}
+
+.btn-outline-light:hover, .btn-outline-light:focus,.btn-outline-light:focus-within, .btn-outline-light:active {
+  @extend .text-dark;
+  color: $dark !important;
 }
 
 div.contentGrid > section:nth-of-type(2n+4) {
@@ -178,7 +187,11 @@ div.contentGrid > section:nth-of-type(2n+4) {
   }
 
   .btn {
-    @extend .btn-outline-dark
+    @extend .btn-outline-dark;
+  }
+  .btn:hover, .btn:focus, .btn:focus-within, .btn:active {
+    @extend .text-light;
+    color: $light !important;
   }
 
 }
