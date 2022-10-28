@@ -10,7 +10,9 @@
 <header class="sticky-top">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-light">
         <div class="container-fluid px-3 w-100">
-            <a class="navbar-brand" href="https://uk.movember.com/team/2306432"><img src="img/logo/logo-navbar/logo-navbar.png" srcset="img/logo/logo-navbar/logo-navbar.png, img/logo/logo-navbar/logo-navbar@2x.png 2x, img/logo/logo-navbar/logo-navbar@3x.png 3x" alt="Movember999 in support of Movember UK"/> </a>
+            <a class="navbar-brand" href="https://uk.movember.com/team/2306432">
+                <img src="img/logo/logo-navbar/logo-navbar.png" srcset="img/logo/logo-navbar/logo-navbar.png, img/logo/logo-navbar/logo-navbar@2x.png 2x, img/logo/logo-navbar/logo-navbar@3x.png 3x" alt="Movember999 in support of Movember UK"/>
+            </a>
             <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -56,16 +58,25 @@
 </header>
 <main>
     <section class="cover-section w-100" id="home">
-        <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column justify-content-end align-items-center flex-grow-1">
-            <!--<main class="px-3 w-75 position-relative">
-                <p class="lead text-center pt-5">Guildford and Chertsey are in the team. by teaming up to complete a virtual row of the Atlantic from Senegal to Brazil.</p>
-            </main>-->
-        </div>
+        <picture>
+            <source media="(max-width: 800px) and (orientation: portrait)" srcset="
+img/cover/portrait/movember999-placeholder-portrait_w_200.png 200w,
+img/cover/portrait/movember999-placeholder-portrait_w_422.png 422w,
+img/cover/portrait/movember999-placeholder-portrait_w_800.png 800w">
+            <img sizes="100vw, 1920px" srcset="
+img/cover/landscape/movember999-placeholder-landscape_w_200.png 200w,
+img/cover/landscape/movember999-placeholder-landscape_w_599.png 599w,
+img/cover/landscape/movember999-placeholder-landscape_w_906.png 906w,
+img/cover/landscape/movember999-placeholder-landscape_w_1208.png 1208w,
+img/cover/landscape/movember999-placeholder-landscape_w_1920.png 1920w" src="img/cover/landscape/movember999-placeholder-landscape_w_1920.png" alt="">
+<!--            <img src="img/cover/portrait/movember999-placeholder-portrait_w_800.png" alt=""/>-->
+        </picture>
     </section>
     <div class="contentGrid" id="rowed">
         <section>
             <div class="mt-5">
-                <h1 class="mb-3 display-1">On average, men die five years earlier than women <sup class="display-1-sup"><a href="#footnote-1">1</a></sup></h1>
+                <h1 class="mb-3 display-1">On average, men die five years earlier than women <sup class="display-1-sup"><a href="#footnote-1">1</a></sup>
+                </h1>
                 <p>A lot of them from preventable causes such as prostate cancer, testicular cancer and suicide.</p>
                 <p>Since 2018 a group of paramedics in Surrey have been raising money for Movember, the charity dedicated to tackling Men’s health, and this year they’re undertaking their biggest challenge yet:</p>
                 <h1 class="mb-5 display-3">Rowing the atlantic</h1>
@@ -148,7 +159,7 @@
             </div>
         </section>
         <section id="about/who">
-            <div class="text-center text-sm-start" >
+            <div class="text-center text-sm-start">
                 <h1>Meet the rowers</h1>
                 <div id="bioContainer"></div>
                 <div class="peopleWrap">
@@ -161,7 +172,7 @@
         <section id="about/why">
             <div>
                 <h1>Why are we doing this?</h1>
-                <p>Their Movember campaigns started in 2018 as a small group of Paramedics from Guildford who wanted to raise awareness for a great charity and have fun doing it. They took up the Movember’s signature challenge of growing a moustache for November. Since then, they’ve been fortunate enough to raise larger and larger amounts of money for this amazing charity each year, thanks in part to the addition of physical challenges.  In 2018 they competed in Movember Make A Move, running 60km each for the 60 men lost to mental health every hour, raising over £5,000 as a result.</p>
+                <p>Their Movember campaigns started in 2018 as a small group of Paramedics from Guildford who wanted to raise awareness for a great charity and have fun doing it. They took up the Movember’s signature challenge of growing a moustache for November. Since then, they’ve been fortunate enough to raise larger and larger amounts of money for this amazing charity each year, thanks in part to the addition of physical challenges. In 2018 they competed in Movember Make A Move, running 60km each for the 60 men lost to mental health every hour, raising over £5,000 as a result.</p>
                 <div class="text-center">
                     <a class="btn btn-xl my-3 mx-auto" href="https://uk.movember.com/team/2306432" type="button">Donate</a>
                 </div>
@@ -177,27 +188,40 @@
         <section id="about/more">
             <div>
                 <h1>Tell me more</h1>
-                <p>Their Movember campaigns started in 2018 as a small group of Paramedics from Guildford who wanted to raise awareness for a great charity and have fun doing it. They took up the Movember’s signature challenge of growing a moustache for November. Since then, they’ve been fortunate enough to raise larger and larger amounts of money for this amazing charity each year, thanks in part to the addition of physical challenges.  In 2018 they competed in Movember Make A Move, running 60km each for the 60 men lost to mental health every hour, raising over £5,000 as a result.</p>
-                <p>This year, they have set themselves an even bigger challenge: to row the Atlantic virtually, following  the Tailisker Whiskey Atlantic Race Route from the Canary Islands to Antigua in the Caribbean - a distance of 4,828km.</p>
+                <p>Their Movember campaigns started in 2018 as a small group of Paramedics from Guildford who wanted to raise awareness for a great charity and have fun doing it. They took up the Movember’s signature challenge of growing a moustache for November. Since then, they’ve been fortunate enough to raise larger and larger amounts of money for this amazing charity each year, thanks in part to the addition of physical challenges. In 2018 they competed in Movember Make A Move, running 60km each for the 60 men lost to mental health every hour, raising over £5,000 as a result.</p>
+                <p>This year, they have set themselves an even bigger challenge: to row the Atlantic virtually, following the Tailisker Whiskey Atlantic Race Route from the Canary Islands to Antigua in the Caribbean - a distance of 4,828km.</p>
                 <p>With a small team of paramedics squeezing in rowing between shifts they hope to complete this by the end of November – which at over 480km per person will be no small feat! However, if they can’t complete it within November, then their Movember moustaches stay until they cross the ‘finish line’.</p>
                 <p>As paramedics they are sadly exposed to the devastating impact of male suicide too frequently, seeing the heart-breaking impact it has on families and loved ones. Each man lost to mental health is one too many.</p>
-                <p>Sadly this impact is felt not only with their patients but with their colleagues too. As many as 22%  of ambulance service staff suffer with Post-Traumatic Stress Disorder (PTSD)<sup><a href="#footnote-2">2</a></sup>, a figure much higher than those actively serving in the armed forces (around 10-12%)<sup><a href="#footnote-3">3</a></sup>. A 2016 report by the UK mental health charity Mind found 91% of ambulance staff had reported poor mental health whilst in service<sup><a href="#footnote-4">4</a></sup>; further studies have found that 56% of ambulance staff report a level of compassion fatigue or burnout<sup><a href="#footnote-5">5</a></sup>. Clearly this is an issue that affects too many people, which is why they are so motivated to raise money to support the fantastic work Movember does in helping us to support men both at work and at home.</p>
+                <p>Sadly this impact is felt not only with their patients but with their colleagues too. As many as 22% of ambulance service staff suffer with Post-Traumatic Stress Disorder (PTSD)<sup><a href="#footnote-2">2</a></sup>, a figure much higher than those actively serving in the armed forces (around 10-12%)<sup><a href="#footnote-3">3</a></sup>. A 2016 report by the UK mental health charity Mind found 91% of ambulance staff had reported poor mental health whilst in service<sup><a href="#footnote-4">4</a></sup>; further studies have found that 56% of ambulance staff report a level of compassion fatigue or burnout<sup><a href="#footnote-5">5</a></sup>. Clearly this is an issue that affects too many people, which is why they are so motivated to raise money to support the fantastic work Movember does in helping us to support men both at work and at home.
+                </p>
             </div>
         </section>
         <section>
             <div>
-                <p id="footnote-1"><sup>1</sup> <a href="https://uk.movember.com/about/cause#:~:text=Men%20are%20dying%20on%20average,largely%20preventable%20reasons">https://uk.movember.com/about/cause</a></p>
-                <p id="footnote-2"><sup>2</sup> <a href="https://emj.bmj.com/content/21/2/235">Levels of mental health problems among UK emergency ambulance workers (Bennett et al. 2004)</a></p>
-                <p id="footnote-3"><sup>3</sup> <a href="https://pubmed.ncbi.nlm.nih.gov/21681455/">Rescuers at risk: a systematic review and meta-regression analysis of the worldwide current prevalence and correlates of PTSD in rescue workers (Berger et al. 2018)</a></p>
-                <p id="footnote-4"><sup>4</sup> <a href="https://www.mind.org.uk/media-a/4584/blue-light-scoping-survey-ambulance.pdf/">Blue Light Scoping Survey - Ambulance Summary (Mind, 2016)</a></p>
-                <p id="footnote-5"><sup>5</sup> <a href="https://pubmed.ncbi.nlm.nih.gov/32067408/">Prevalence of burnout in paramedics: A systematic review of prevalence studies (Reardon et al. 2020)</a></p>
+                <p id="footnote-1"><sup>1</sup>
+                    <a href="https://uk.movember.com/about/cause#:~:text=Men%20are%20dying%20on%20average,largely%20preventable%20reasons">https://uk.movember.com/about/cause</a>
+                </p>
+                <p id="footnote-2"><sup>2</sup>
+                    <a href="https://emj.bmj.com/content/21/2/235">Levels of mental health problems among UK emergency ambulance workers (Bennett et al. 2004)</a>
+                </p>
+                <p id="footnote-3"><sup>3</sup>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/21681455/">Rescuers at risk: a systematic review and meta-regression analysis of the worldwide current prevalence and correlates of PTSD in rescue workers (Berger et al. 2018)</a>
+                </p>
+                <p id="footnote-4"><sup>4</sup>
+                    <a href="https://www.mind.org.uk/media-a/4584/blue-light-scoping-survey-ambulance.pdf/">Blue Light Scoping Survey - Ambulance Summary (Mind, 2016)</a>
+                </p>
+                <p id="footnote-5"><sup>5</sup>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/32067408/">Prevalence of burnout in paramedics: A systematic review of prevalence studies (Reardon et al. 2020)</a>
+                </p>
             </div>
         </section>
     </div>
 </main>
 <footer class="dark px-3 py-5">
     <div class="d-flex flex-column justify-content-center">
-        <a class="nav-link mx-auto my-2" href="https://uk.movember.com/team/2306432"><img src="img/logo/logo-bottom/logo-bottom.png" srcset="img/logo/logo-bottom/logo-bottom.png, img/logo/logo-bottom/logo-bottom@2x.png 2x, img/logo/logo-bottom/logo-bottom@3x.png 3x" alt="Movember999 in support of Movember UK"></a>
+        <a class="nav-link mx-auto my-2" href="https://uk.movember.com/team/2306432">
+            <img src="img/logo/logo-bottom/logo-bottom.png" srcset="img/logo/logo-bottom/logo-bottom.png, img/logo/logo-bottom/logo-bottom@2x.png 2x, img/logo/logo-bottom/logo-bottom@3x.png 3x" alt="Movember999 in support of Movember UK">
+        </a>
         <a class="btn btn-outline-light my-2 mx-auto" href="https://uk.movember.com/team/2306432" type="button">Donate</a>
         <ul class="footerList">
             <li><a href="#home">Home</a></li>
@@ -224,8 +248,12 @@
                 <p>This website uses essential third-party cookies to function. By clicking "I agree" you agree to the use of these cookies. If you do not agree simply close this browser window.</p>
                 <p>For more information please see:</p>
                 <ul class="list-unstyled text-break">
-                    <li><a href="https://www.mapbox.com/legal/cookies" target="_blank">https://www.mapbox.com/legal/cookies</a></li>
-                    <li><a href="https://policies.google.com/technologies/cookies" target="_blank">https://policies.google.com/technologies/cookies</a></li>
+                    <li>
+                        <a href="https://www.mapbox.com/legal/cookies" target="_blank">https://www.mapbox.com/legal/cookies</a>
+                    </li>
+                    <li>
+                        <a href="https://policies.google.com/technologies/cookies" target="_blank">https://policies.google.com/technologies/cookies</a>
+                    </li>
                 </ul>
             </div>
             <div class="modal-footer">
