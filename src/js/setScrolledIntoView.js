@@ -1,12 +1,13 @@
 /* eslint-disable no-use-before-define */
 import setCountUps from "./setCountUps";
+import animateMap from "./animateMap";
 
 const setScrolledIntoView = ({
-    animateMap,
-    map,
+                                 map,
     mapAnimationDurationInMs,
     progressMarkerMapBoxGl,
     sheetsData,
+    replayButton
 }) => {
     const scrolledIntoView = new IntersectionObserver(
         (entries) => {
@@ -32,6 +33,7 @@ const setScrolledIntoView = ({
             countUpRaised.start();
         },
         map: () => {
+            countUpMarker.reset();
             countUpMarker.start();
             animateMap(
                 map,
@@ -59,5 +61,8 @@ const setScrolledIntoView = ({
             scrolledIntoView.observe(el);
         }
     });
+
+    replayButton.addEventListener("click", scrolledIntoViewFunctionMap.map);
+
 };
 export default setScrolledIntoView;
