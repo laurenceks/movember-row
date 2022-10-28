@@ -9,7 +9,6 @@ import {
     route,
     totalDistanceInKilometres,
 } from "./geoData";
-import animateMap from "./animateMap";
 import setScrolledIntoView from "./setScrolledIntoView";
 
 const zoomToFit = (map) =>
@@ -90,14 +89,43 @@ const loadMap = (map, sheetsData, mapAnimationDurationInMs = 3000) => {
         .setLngLat(progressMarker.geometry.coordinates)
         .addTo(map);
     zoomToFit(map);
+
+    //add hidden replay button to be revealed after first animation
+    const replayButton = document.createElement("button");
+    replayButton.className = "btn btn-outline-light btn-map-replay hidden";
+    replayButton.setAttribute("id", "btnMapReplay")
+    const replayIcon = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "svg"
+    );
+    const replayPath = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "path"
+    );
+    replayIcon.setAttribute("stroke", "currentColor");
+    replayIcon.setAttribute("fill", "currentColor");
+    replayIcon.setAttribute("stroke-width", "0");
+    replayIcon.setAttribute("viewBox", "0 0 50 50");
+    replayIcon.setAttribute("width", "50");
+    replayIcon.setAttribute("height", "50");
+    replayIcon.setAttribute("preserveAspectRatio", "xMidYMid meet");
+    replayIcon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    replayPath.setAttribute(
+        "d",
+        "M24 44q-3.75 0-7.025-1.4-3.275-1.4-5.725-3.85Q8.8 36.3 7.4 33.025 6 29.75 6 26h3q0 6.25 4.375 10.625T24 41q6.25 0 10.625-4.375T39 26q0-6.25-4.25-10.625T24.25 11H23.1l3.65 3.65-2.05 2.1-7.35-7.35 7.35-7.35 2.05 2.05-3.9 3.9H24q3.75 0 7.025 1.4 3.275 1.4 5.725 3.85 2.45 2.45 3.85 5.725Q42 22.25 42 26q0 3.75-1.4 7.025-1.4 3.275-3.85 5.725-2.45 2.45-5.725 3.85Q27.75 44 24 44Z"
+    );
+    replayIcon.appendChild(replayPath);
+    replayButton.appendChild(replayIcon);
+    document.getElementById("mapDiv").appendChild(replayButton);
+
     // on window resize, fit the map to the screen
     window.addEventListener("resize", () => zoomToFit(map));
     setScrolledIntoView({
-        animateMap,
         map,
         sheetsData,
         progressMarkerMapBoxGl,
         mapAnimationDurationInMs,
+        replayButton
     });
 };
 
