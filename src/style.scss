@@ -91,13 +91,13 @@ div.contentGrid > section:not(.cover-section, .map-section) {
 
 section.cover-section {
   @extend .dark;
-  background-image: url("../public/img/cover/cover.jpg");
-  min-height: 690px;
-  background-position: top center;
-  background-size: cover;
-  filter: grayscale(1) contrast(1.25);
   display: flex; //IMPORTANT - lets children grow to 100% of height
   flex-direction: column; //IMPORTANT - lets children grow to 100% of height
+}
+
+section.cover-section > picture, section.cover-section > picture > source, section.cover-section > picture > img {
+  width: 100%;
+  height: auto;
 }
 
 sup > a {
@@ -112,7 +112,6 @@ sup.display-1-sup {
 @media (max-width: 600px) and (orientation: portrait) {
 
   section.cover-section {
-    background-image: url("../public/img/cover/cover-sm.jpg");
     min-height: 500px;
   }
 }
@@ -159,13 +158,14 @@ div.contentGrid > section {
   .btn {
     @extend .btn-outline-light;
   }
-  .btn:hover, .btn:focus,.btn:focus-within, .btn:active {
+
+  .btn:hover, .btn:focus, .btn:focus-within, .btn:active {
     @extend .text-dark;
     color: $dark !important;
   }
 }
 
-.btn-outline-light:hover, .btn-outline-light:focus,.btn-outline-light:focus-within, .btn-outline-light:active {
+.btn-outline-light:hover, .btn-outline-light:focus, .btn-outline-light:focus-within, .btn-outline-light:active {
   @extend .text-dark;
   color: $dark !important;
 }
@@ -189,6 +189,7 @@ div.contentGrid > section:nth-of-type(2n+4) {
   .btn {
     @extend .btn-outline-dark;
   }
+
   .btn:hover, .btn:focus, .btn:focus-within, .btn:active {
     @extend .text-light;
     color: $light !important;
