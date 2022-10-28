@@ -3,12 +3,14 @@ const glob = require("glob-all");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const PurgecssPlugin = require("purgecss-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     entry: "./src/index.js",
     output: {
         filename: "main.js",
         path: path.resolve(__dirname, "dist"),
+        publicPath: "",
         clean: true,
     },
     devServer: {
@@ -20,13 +22,16 @@ module.exports = {
         liveReload: true,
         hot: false,
     },
-    plugins: [
-        new PurgecssPlugin({
-            paths: glob.sync([`${path.join(__dirname, "src")}/**/*`,`${path.join(__dirname, "dist")}/**/*`,`${path.join(__dirname, "public")}/**/*`], {nodir: true}),
-        }),
-        new HtmlWebpackPlugin({template: "public/index.html"}),
-        new MiniCssExtractPlugin({filename: "[name].css"}),
-    ],
+    plugins: [new CopyPlugin({
+        patterns: [{
+            from: "public/img/",
+            to: "img/",
+        }],
+    }), new PurgecssPlugin({
+        paths: glob.sync([`${path.join(__dirname, "src")}/**/*`,
+                          `${path.join(__dirname, "dist")}/**/*`,
+                          `${path.join(__dirname, "public")}/**/*`], {nodir: true}),
+    }), new HtmlWebpackPlugin({template: "public/index.html"}), new MiniCssExtractPlugin({filename: "[name].css"})],
     mode: "development",
     module: {
         rules: [{
@@ -36,6 +41,12 @@ module.exports = {
             test: /\.s[ac]ss$/i,
             exclude: /node_modules/,
             use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+        }, {
+            test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
+            type: 'asset',
+            generator: {
+                filename: 'fonts/[hash][ext][query]',
+            },
         }],
     },
 
