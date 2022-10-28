@@ -11,8 +11,14 @@ const animateMap = (
     scrolledIntoView = null,
     durationInMs = 3000
 ) => {
-    // make sure the event listener only fires once
-    scrolledIntoView.unobserve(document.querySelector("#map"));
+    if(scrolledIntoView) {
+        // make sure the event listener only fires once
+        scrolledIntoView.unobserve(document.querySelector("#map"));
+    }
+
+    //make sure replay button is hidden
+    document.getElementById("btnMapReplay").classList.add("hidden");
+
     const easing = BezierEasing(0.16, 1, 0.3, 1); // easeOutExpo to match countUp
     let startTime = null;
     const progressAnimation = (timestamp) => {
@@ -61,6 +67,9 @@ const animateMap = (
         // if not yet complete, request a new frame
         if (progressPercent < 1) {
             requestAnimationFrame(progressAnimation);
+        }else{
+            //animation finished - show replay button
+            document.getElementById("btnMapReplay").classList.remove("hidden");
         }
     };
     requestAnimationFrame(progressAnimation);
