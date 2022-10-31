@@ -5,12 +5,12 @@ const setBios = () => {
         {
             name: "Sam",
             imgSrc: "/img/rowers/rower-sam.jpg",
-            body: "Paramedic at Tongham, fifth year in the team. Rowing for Mayes, Bailey and Eric. “I started participating after my grandfather was diagnosed with prostate cancer, since then Movember’s involvement with men’s mental health has taken my focus. My father had depression when I was younger but it’s only within the past few years that I understood what he was going through. More recently one of my close friends lost her brother to suicide after losing his battle with mental health.”",
+            body: "Paramedic at Tongham, fifth year in the team. Rowing for Mayes, Bailey and Eric. “I lost my uncle to testicular cancer when I was a child and since leaving school, sadly lost two of my classmates to suicide. The main thing we talk about when we speak about those we’ve lost, is that we wished they could have picked up the phone and called us. The work Movember does to help educate and facilitate these conversations is my drive to finish the challenge.”",
         },
         {
             name: "Oli R",
             imgSrc: "/img/rowers/rower-oli.jpg",
-            body: "Paramedic at Tongham, fifth year in the team. Rowing for Gramps and anyone who's lost someone to or suffers with mental health challenges. Last year Oli took part in the 60km for Movember and this year feels this challenge will really test the team’s limits and “push the boat out” as well as get people talking about mental health. It’s one thing to grow a moustache (though some of the team find it harder than others) but this year these paramedics wanted a real challenge.",
+            body: "Paramedic at Tongham, fifth year in the team. “I started participating after my grandfather was diagnosed with prostate cancer, since then Movember’s involvement with men’s mental health has taken my focus. My father had depression when I was younger but it’s only within the past few years that I understood what he was going through. More recently one of my close friends lost her brother to suicide after losing his battle with mental health.”",
         },
         {
             name: "Pete",
