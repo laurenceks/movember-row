@@ -6,7 +6,7 @@ export default class Bio extends HTMLElement {
                 <div class="text-center img-circle-container">
                     <div class="img-circle-wrap">
                         <img class="img-circle" ${
-                            vars.src ? `src="${vars.src.value}" ${vars.src2x ? `srcset="${vars.src.value}, ${vars.src.value.replace(/\.(png|jpg|jpeg)$/i, "@2x.$1")} 2x"` : ""}` : ""
+                            vars.src ? `${vars.src2x ? `srcset="${vars.src.value}, ${vars.src.value.replace(/\.(png|jpg|jpeg)$/i, "@2x.$1")} 2x"` : ""} src="${vars.src.value}"` : ""
                         } alt=""/>
                     </div>
                     <h3 class="my-3">${vars.name.value}</h3>
