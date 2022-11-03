@@ -60,6 +60,11 @@ const setBios = () => {
             imgSrc: "/img/rowers/rower-harry.jpeg",
             body: "Paramedic at Chertsey, first year in the team.",
         },
+        {
+            name: "Greg",
+            imgSrc: "/img/rowers/rower-greg.jpeg",
+            body: "Paramedic at Chertsey, second year in the team.",
+        },
     ];
 
     customElements.define("rower-bio", Bio);
