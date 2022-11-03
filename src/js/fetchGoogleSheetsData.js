@@ -1,3 +1,5 @@
+import {totalDistanceInKilometres} from "./geoData";
+
 const fetchGoogleSheetsData = async () => {
     const sheetId = "1_qii19Q1Aa81zD1bPBEPS-ezK9L4WX_LEGSHekWERRM";
     const base = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?`;
@@ -59,6 +61,10 @@ const fetchGoogleSheetsData = async () => {
     } else {
         // console.error("Error fetching Google Sheets data");
     }
+
+    //make sure total distance is never more than the maximum possible distance according to the route
+    sheetsData["Total distance"] = Math.max(Math.min(sheetsData["Total distance"], totalDistanceInKilometres), 0);
+
     return sheetsData;
 };
 
