@@ -10,6 +10,7 @@ const setBios = () => {
         {
             name: "Oli R",
             imgSrc: "/img/rowers/rower-oli.jpg",
+            src2x: true,
             body: "Paramedic at Tongham, fifth year in the team. “I started participating after my grandfather was diagnosed with prostate cancer, since then Movember’s involvement with men’s mental health has taken my focus. My father had depression when I was younger but it’s only within the past few years that I understood what he was going through. More recently one of my close friends lost her brother to suicide after losing his battle with mental health.”",
         },
         {
@@ -19,6 +20,7 @@ const setBios = () => {
         {
             name: "Stan",
             imgSrc: "/img/rowers/rower-stan.jpg",
+            src2x: true,
             body: "Paramedic/Clinical Supervisor at Chertsey/Crawley, third year in the team.",
         },
         {
@@ -29,21 +31,25 @@ const setBios = () => {
         {
             name: "Oli W",
             imgSrc: "/img/rowers/rower-oli-w.jpg",
+            src2x: true,
             body: "Paramedic at Chertsey, second year in the team.",
         },
         {
             name: "Nathan",
             imgSrc: "/img/rowers/rower-nathan.jpeg",
+            src2x: true,
             body: "Paramedic at Chertsey, second year in the team.",
         },
         {
             name: "Ian",
             imgSrc: "/img/rowers/rower-ian.jpeg",
+            src2x: true,
             body: "Paramedic at Godalming, third year in the team.",
         },
         {
             name: "Sam G",
             imgSrc: "/img/rowers/rower-sam-g.jpeg",
+            src2x: true,
             body: "Operations Manager at Chertsey, second year in the team.",
         },
         {
@@ -58,11 +64,13 @@ const setBios = () => {
         {
             name: "Harry",
             imgSrc: "/img/rowers/rower-harry.jpeg",
-            body: "Paramedic at Chertsey, first year in the team.",
+            src2x: true,
+            body: "Paramedic at Chertsey, first year in the team."
         },
         {
             name: "Greg",
             imgSrc: "/img/rowers/rower-greg.jpeg",
+            src2x: true,
             body: "Paramedic at Chertsey, second year in the team.",
         },
     ];
@@ -73,6 +81,9 @@ const setBios = () => {
         const newBio = document.createElement("rower-bio");
         if (x.imgSrc) {
             newBio.setAttribute("src", x.imgSrc);
+            if(x.src2x){
+                newBio.setAttribute("src2x", x.src2x);
+            }
         }
         newBio.setAttribute("name", x.name);
         newBio.setAttribute("body", x.body);
