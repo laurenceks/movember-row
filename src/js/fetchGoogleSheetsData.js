@@ -15,6 +15,7 @@ const fetchGoogleSheetsData = async () => {
             distance: [],
             time: [],
         },
+        totals:{}
     };
     if (sheetsQuery.ok) {
         // Strip leading characters Google send back
@@ -48,18 +49,28 @@ const fetchGoogleSheetsData = async () => {
 
         // process rows into usable sheetsData object
         sheetsRows.forEach((row, rowNum) => {
-            row.forEach((col, colNum) => {
-                if (colNum === 0 && col) {
-                    // cols A:B - stats
-                    sheetsData[col.v] = sheetsRows[rowNum][colNum + 1].v;
-                } else if (colKeys[colNum] && col) {
-                    // Other cols - leaderboards
-                    mapColToValue(colKeys[colNum], col, rowNum, colNum);
+            row.forEach((cell, colNum) => {
+                if (cell) {
+                    if (colNum === 0) {
+                        // cols A:B - stats
+                        sheetsData[cell.v] = sheetsRows[rowNum][colNum + 1].v;
+                    } else if (colNum === 13) {
+                        // totals
+                        sheetsData.totals[cell.v] = {
+                            distance: sheetsRows[rowNum][colNum + 1].v,
+                            time: sheetsRows[rowNum][colNum + 2].v,
+                            submissions: sheetsRows[rowNum][colNum + 3].v,
+                        };
+                        // mapColToValue(colKeys[colNum], cell, rowNum, colNum);
+                    } else if (colNum <= 13 && colKeys[colNum]) {
+                        // Other cols - leaderboards
+                        mapColToValue(colKeys[colNum], cell, rowNum, colNum);
+                    }
                 }
             });
         });
     } else {
-        // console.error("Error fetching Google Sheets data");
+        console.error("Error fetching Google Sheets data");
     }
 
     //make sure total distance is never more than the maximum possible distance according to the route
