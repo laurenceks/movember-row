@@ -309,6 +309,12 @@ rower-bio:nth-of-type(2n) > div.peopleWrap > div.peopleContainer {
   }
 }
 
+@include media-breakpoint-up(sm) {
+  .min-h-sm-250 {
+    min-height: 250px;
+  }
+}
+
 ul.footerList {
   @extend .p-2;
   list-style: none;
