@@ -1,6 +1,6 @@
 import mapboxgl from "mapbox-gl";
 import midpoint from "@turf/midpoint";
-import MAPBOX_ACCESS_TOKEN from "./tokens";
+import MAPBOX_ACCESS_TOKEN from "./data/tokens";
 import { coordinates } from "./geoData";
 import loadMap from "./loadMap";
 
