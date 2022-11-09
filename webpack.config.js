@@ -8,7 +8,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 module.exports = {
     entry: "./src/index.js",
     output: {
-        filename: "[name].bundle.js",
+        filename: "[name].bundle.[contenthash].js",
         path: path.resolve(__dirname, "dist"),
         publicPath: "",
         clean: true,
@@ -52,6 +52,14 @@ module.exports = {
     optimization: {
         splitChunks: {
             chunks: 'all',
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all',
+                },
+            },
         },
+        runtimeChunk: "single"
     },
 };
