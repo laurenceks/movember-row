@@ -12,6 +12,8 @@ export default [
     },
     {
         name: "Pete",
+        imgSrc: "img/rowers/rower-pete.jpeg",
+        src2x: true,
         body: "Critical Care Paramedic at Tongham, fourth year in the team.",
     },
     {
@@ -50,10 +52,6 @@ export default [
         body: "Operations Manager at Chertsey, second year in the team.",
     },
     {
-        name: "Chris",
-        body: "Operational Team Leader at Tongham, second year in the team.",
-    },
-    {
         name: "Ben",
         imgSrc: "/img/rowers/rower-ben.jpg",
         body: "Critical Care Paramedic at Chertsey, first year in the team.",
@@ -69,5 +67,11 @@ export default [
         imgSrc: "/img/rowers/rower-greg.jpeg",
         src2x: true,
         body: "Paramedic at Chertsey, second year in the team.",
+    },
+    {
+        name: "Jon Jon",
+        imgSrc: "/img/rowers/rower-jon.jpeg",
+        src2x: true,
+        body: "Critical Care Paramedic at Chertsey, first year in the team.",
     },
 ];
