@@ -5,18 +5,8 @@ import fetchGoogleSheetsData from "./js/fetchGoogleSheetsData";
 import setTables from "./js/setTables";
 import initMap from "./js/initMap";
 import setBios from "./js/setBios";
-
-// TODO - hide # from URL ?
-
-/*
-window.addEventListener("hashchange", (e) => {
-    history.pushState(
-        "",
-        document.title,
-        e.newURL.match(/#[/\-\w]+/)[0]?.replace("#", "")
-    );
-});
-*/
+import "bootstrap/js/dist/dropdown"
+import "bootstrap/js/dist/button"
 
 const init = async () => {
     const mapAnimationDurationInMs = 3000;

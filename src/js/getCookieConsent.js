@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { Modal } from "bootstrap";
+import Modal from "bootstrap/js/dist/modal";
 
 const getCookieConsent = (callback) => {
     if (!Cookies.get("cookie-consent-given")) {
