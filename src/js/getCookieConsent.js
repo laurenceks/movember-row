@@ -1,28 +1,25 @@
 import Cookies from "js-cookie";
 import {Modal} from "bootstrap";
-import {googleTag} from "./data/tokens";
+import {clickyId} from "./data/tokens";
 
-const startGoogleAnalytics = () => {
-    //set Google analytics here
-    //https://stackoverflow.com/questions/69685735/how-to-load-an-external-javascript-on-a-condition
-    //https://github.com/DavidWells/analytics/blob/master/packages/analytics-plugin-google-analytics/src/browser.js
-    const script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.async = true;
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${googleTag}`;
-    document.head.append(script);
-    window.dataLayer = window.dataLayer || [];
+const startClickyAnalytics = () => {
+    const analyticsScript = document.createElement('script');
+    analyticsScript.type = 'text/javascript';
+    analyticsScript.async = true;
+    analyticsScript.src = `//static.getclicky.com/${clickyId}.js`;
 
-    function gtag() {
-        dataLayer.push(arguments);
-    }
+    const analyticsNoScript = document.createElement("noscript");
+    const analyticsNoScriptImg = document.createElement("img");
+    analyticsNoScriptImg.style.display = "none";
+    analyticsNoScriptImg.setAttribute("src", ` //in.getclicky.com/${clickyId}ns.gif`);
+    analyticsNoScript.appendChild(analyticsNoScriptImg);
 
-    gtag('js', new Date());
-    gtag('config', googleTag);
+    document.head.appendChild(analyticsScript);
+    document.body.appendChild(analyticsNoScript);
 };
 
 const getCookieConsent = (callback) => {
-    if (!Cookies.get("cookie-consent-given")) {
+    if (!Cookies.get("cookie-consent-given-essential")) {
         // no cookie for consenting to cookies
         const cookieModalElement = document.getElementById("cookie-modal");
         const cookieModal = new Modal(cookieModalElement, {
@@ -36,18 +33,21 @@ const getCookieConsent = (callback) => {
                     expires: 30,
                     sameSite: "strict",
                 });
-                startGoogleAnalytics();
+                startClickyAnalytics();
+            } else {
+                Cookies.remove("cookie-consent-given-all");
+                Cookies.remove("_jsuid");
             }
-            Cookies.set("cookie-consent-given", true, {
-                expires: 30,
+            Cookies.set("cookie-consent-given-essential", true, {
+                expires: e.target.dataset["cookieBtn"] === "all" ? 30 : 1,
                 sameSite: "strict",
             });
             callback();
         }));
     } else {
         callback();
-        if(Cookies.get("cookie-consent-given-all")){
-            startGoogleAnalytics();
+        if (Cookies.get("cookie-consent-given-all")) {
+            startClickyAnalytics();
         }
     }
 };
