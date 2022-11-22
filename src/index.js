@@ -7,6 +7,7 @@ import initMap from "./js/initMap";
 import setBios from "./js/setBios";
 import "bootstrap/js/dist/dropdown"
 import "bootstrap/js/dist/button"
+import "bootstrap/js/dist/collapse"
 
 const init = async () => {
     const mapAnimationDurationInMs = 3000;
