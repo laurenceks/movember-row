@@ -18,6 +18,12 @@ const startClickyAnalytics = () => {
     document.body.appendChild(analyticsNoScript);
 };
 
+const increaseVisitorCountWithoutCookies = () => {
+    //logs the visit but no other information, just increases the count
+    const nonTrackingClickyCount = new Image();
+    nonTrackingClickyCount.src = "//in.getclicky.com/101387125ns.gif";
+}
+
 const getCookieConsent = (callback) => {
     if (!Cookies.get("cookie-consent-given-essential")) {
         // no cookie for consenting to cookies
@@ -37,6 +43,7 @@ const getCookieConsent = (callback) => {
             } else {
                 Cookies.remove("cookie-consent-given-all");
                 Cookies.remove("_jsuid");
+                increaseVisitorCountWithoutCookies();
             }
             Cookies.set("cookie-consent-given-essential", true, {
                 expires: e.target.dataset["cookieBtn"] === "all" ? 30 : 1,
@@ -48,6 +55,8 @@ const getCookieConsent = (callback) => {
         callback();
         if (Cookies.get("cookie-consent-given-all")) {
             startClickyAnalytics();
+        }else{
+            increaseVisitorCountWithoutCookies();
         }
     }
 };
