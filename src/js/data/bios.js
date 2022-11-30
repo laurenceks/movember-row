@@ -28,12 +28,6 @@ export default [
         body: "Paramedic at Chertsey, second year in the team.",
     },
     {
-        name: "Oli W",
-        imgSrc: "/img/rowers/rower-oli-w.jpg",
-        src2x: true,
-        body: "Paramedic at Chertsey, second year in the team.",
-    },
-    {
         name: "Nathan",
         imgSrc: "/img/rowers/rower-nathan.jpeg",
         src2x: true,
@@ -73,5 +67,11 @@ export default [
         imgSrc: "/img/rowers/rower-jon.jpeg",
         src2x: true,
         body: "Critical Care Paramedic at Chertsey, first year in the team.",
+    },
+    {
+        name: "Oli F",
+        imgSrc: "/img/rowers/rower-oli-f.jpeg",
+        src2x: true,
+        body: "Paramedic at Haslemere, first year in the team.",
     },
 ];
