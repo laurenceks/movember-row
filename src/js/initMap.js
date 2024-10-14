@@ -1,8 +1,8 @@
 import mapboxgl from "mapbox-gl";
 import midpoint from "@turf/midpoint";
 import MAPBOX_ACCESS_TOKEN from "./data/tokens";
-import { coordinates } from "./geoData";
 import loadMap from "./loadMap";
+import { routeEnd, routeStart } from "./data/route";
 
 const initMap = (sheetsData, mapAnimationDurationInMs = 3000) => {
     mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
@@ -13,8 +13,8 @@ const initMap = (sheetsData, mapAnimationDurationInMs = 3000) => {
         style: "mapbox://styles/laurenceks/cl7bgee30002n15quqh65ph2w",
         projection: "mercator",
         center: midpoint(
-            coordinates.start.arrayLongLat,
-            coordinates.end.arrayLongLat
+            routeStart.geometry.coordinates,
+            routeEnd.geometry.coordinates
         ).geometry.coordinates,
         zoom: 4,
         interactive: false,

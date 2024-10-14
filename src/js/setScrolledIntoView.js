@@ -3,11 +3,11 @@ import setCountUps from "./setCountUps";
 import animateMap from "./animateMap";
 
 const setScrolledIntoView = ({
-                                 map,
+    map,
     mapAnimationDurationInMs,
     progressMarkerMapBoxGl,
     sheetsData,
-    replayButton
+    replayButton,
 }) => {
     const scrolledIntoView = new IntersectionObserver(
         (entries) => {
@@ -33,11 +33,13 @@ const setScrolledIntoView = ({
             countUpRaised.start();
         },
         map: () => {
-            countUpMarker.reset();
-            countUpMarker.start();
+            // countUpMarker.reset();
+            // countUpMarker.start();
             animateMap(
                 map,
-                progressMarkerMapBoxGl,
+                // progressMarkerMapBoxGl,
+                null,
+                sheetsData,
                 sheetsData["Total distance"],
                 scrolledIntoView,
                 mapAnimationDurationInMs
@@ -63,6 +65,5 @@ const setScrolledIntoView = ({
     });
 
     replayButton.addEventListener("click", scrolledIntoViewFunctionMap.map);
-
 };
 export default setScrolledIntoView;

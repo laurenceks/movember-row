@@ -1,47 +1,46 @@
 import mapboxgl from "mapbox-gl";
 import greatCircle from "@turf/great-circle";
 import length from "@turf/length";
+import linestring from "turf-linestring";
+import { routeStart, routeEnd, routeLinestring } from "./data/route";
 
-const coordinates = {
-    start: {
-        long: -17.1104943,
-        lat: 28.083006,
-        label: "San Sabastian de la Gomera",
-    },
-    end: {
-        long: -61.7642905,
-        lat: 17.0092287,
-        label: "English Harbour, Antigua",
-    },
-};
+// overall route
 
-const coordinatesDirection = {
+const routeDirection = {
     horizontal:
-        coordinates.start.long >= coordinates.end.long
+        routeStart.geometry.coordinates[0] >= routeEnd.geometry.coordinates[0]
             ? "rightToLeft"
             : "leftToRight",
-    vertical: coordinates.start.lat >= coordinates.end.lat ? "down" : "up",
+    vertical:
+        routeStart.geometry.coordinates[1] >= routeEnd.geometry.coordinates[1]
+            ? "down"
+            : "up",
 };
 
 // create more convenient properties
+/*
 Object.keys(coordinates).forEach((x) => {
     const val = coordinates[x];
     coordinates[x].LngLat = new mapboxgl.LngLat(val.long, val.lat);
     coordinates[x].fullLongLat = `${val.long}, ${val.lat}`;
     coordinates[x].arrayLongLat = [val.long, val.lat];
 });
+*/
 
-// overall route
-const route = {
+const totalDistanceInKilometres = length(routeLinestring);
+
+console.log(totalDistanceInKilometres);
+// route from start to current total distance rowed - starts with 0 distance initially
+// route from current position to end
+
+/*
+const remainingRoute = {
     type: "geojson",
     data: greatCircle(
         coordinates.start.arrayLongLat,
         coordinates.end.arrayLongLat
     ),
 };
-
-const totalDistanceInKilometres = length(route.data);
-// route from start to current total distance rowed - starts with 0 distance initially
 const progressRoute = {
     type: "geojson",
     data: {
@@ -55,16 +54,9 @@ const progressRoute = {
         },
     },
 };
+*/
 
-// route from current position to end
-const remainingRoute = {
-    type: "geojson",
-    data: greatCircle(
-        coordinates.start.arrayLongLat,
-        coordinates.end.arrayLongLat
-    ),
-};
-
+/*
 const progressMarker = {
     type: "Feature",
     properties: null,
@@ -73,13 +65,6 @@ const progressMarker = {
         coordinates: [...progressRoute.data.geometry.coordinates].pop(),
     },
 };
+*/
 
-export {
-    coordinates,
-    coordinatesDirection,
-    route,
-    totalDistanceInKilometres,
-    remainingRoute,
-    progressMarker,
-    progressRoute,
-};
+export { routeDirection, routeLinestring, totalDistanceInKilometres };

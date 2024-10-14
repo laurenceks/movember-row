@@ -1,42 +1,23 @@
-import mapboxgl from "mapbox-gl";
 import bbox from "@turf/bbox";
-import {
-    coordinates,
-    coordinatesDirection,
-    progressMarker,
-    progressRoute,
-    remainingRoute,
-    route,
-    totalDistanceInKilometres,
-} from "./geoData";
+import camelcase from "camelcase";
+import { routeLinestring } from "./geoData";
+import { routeStart } from "./data/route";
 import setScrolledIntoView from "./setScrolledIntoView";
 
+const routeSource = { type: "geojson", data: { ...routeLinestring } };
+
 const zoomToFit = (map) =>
-    map.fitBounds(bbox(route.data), {
+    map.fitBounds(bbox(routeLinestring), {
         padding: 75,
         offset: [0, 10],
     });
 
 const loadMap = (map, sheetsData, mapAnimationDurationInMs = 3000) => {
-    map.addSource("progressRoute", progressRoute);
-    map.addSource("remainingRoute", remainingRoute);
+    map.addSource("route", routeSource);
     map.addLayer({
-        id: "progressRoute",
+        id: "route",
         type: "line",
-        source: "progressRoute",
-        layout: {
-            "line-join": "round",
-            "line-cap": "round",
-        },
-        paint: {
-            "line-color": "#FFFFFF",
-            "line-width": 2,
-        },
-    });
-    map.addLayer({
-        id: "remainingRoute",
-        type: "line",
-        source: "remainingRoute",
+        source: "route",
         layout: {
             "line-join": "round",
             "line-cap": "round",
@@ -46,6 +27,43 @@ const loadMap = (map, sheetsData, mapAnimationDurationInMs = 3000) => {
             "line-width": 2,
         },
     });
+    sheetsData.leaderboards.teams
+        .sort((a, b) => (a.distance <= b.distance ? 1 : -1))
+        .forEach((team, i) => {
+            // eslint-disable-next-line no-param-reassign
+            team.teamId = camelcase(team.teamName);
+            // eslint-disable-next-line no-param-reassign
+            team.sourceId = `teamSource-${team.teamId}`;
+            // add source and layer for each team
+            map.addSource(team.sourceId, {
+                type: "geojson",
+                data: {
+                    type: "FeatureCollection",
+                    features: [
+                        {
+                            type: "Feature",
+                            properties: {},
+                            geometry: { ...routeStart.geometry },
+                        },
+                    ],
+                },
+            });
+            map.addLayer({
+                id: `teamRoute-${team.teamId}`,
+                type: "line",
+                source: team.sourceId,
+                layout: {
+                    "line-join": "round",
+                    "line-cap": "round",
+                },
+                paint: {
+                    "line-color": team.colour,
+                    "line-width": 2,
+                    "line-offset": 2 * i,
+                },
+            });
+        });
+    /*
     new mapboxgl.Marker({ color: "#FFFFFF" })
         .setLngLat(coordinates.start.LngLat)
         .addTo(map);
@@ -61,7 +79,7 @@ const loadMap = (map, sheetsData, mapAnimationDurationInMs = 3000) => {
         "http://www.w3.org/2000/svg",
         "path"
     );
-    newMarker.className = `progressMarker p-2 ${coordinatesDirection.horizontal} ${coordinatesDirection.vertical}`;
+    newMarker.className = `progressMarker p-2 ${routeDirection.horizontal} ${routeDirection.vertical}`;
     markerIcon.setAttribute("stroke", "currentColor");
     markerIcon.setAttribute("fill", "currentColor");
     markerIcon.setAttribute("stroke-width", "0");
@@ -88,12 +106,13 @@ const loadMap = (map, sheetsData, mapAnimationDurationInMs = 3000) => {
     const progressMarkerMapBoxGl = new mapboxgl.Marker(newMarker)
         .setLngLat(progressMarker.geometry.coordinates)
         .addTo(map);
+*/
     zoomToFit(map);
 
-    //add hidden replay button to be revealed after first animation
+    // add hidden replay button to be revealed after first animation
     const replayButton = document.createElement("button");
     replayButton.className = "btn btn-outline-light btn-map-replay hidden";
-    replayButton.setAttribute("id", "btnMapReplay")
+    replayButton.setAttribute("id", "btnMapReplay");
     const replayIcon = document.createElementNS(
         "http://www.w3.org/2000/svg",
         "svg"
@@ -123,9 +142,9 @@ const loadMap = (map, sheetsData, mapAnimationDurationInMs = 3000) => {
     setScrolledIntoView({
         map,
         sheetsData,
-        progressMarkerMapBoxGl,
+        // progressMarkerMapBoxGl,
         mapAnimationDurationInMs,
-        replayButton
+        replayButton,
     });
 };
 

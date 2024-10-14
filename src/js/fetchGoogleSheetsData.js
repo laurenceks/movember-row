@@ -1,7 +1,8 @@
-import {totalDistanceInKilometres} from "./geoData";
+import camelCase from "camelcase";
+import { totalDistanceInKilometres } from "./geoData";
 
 const fetchGoogleSheetsData = async () => {
-    const sheetId = "1_qii19Q1Aa81zD1bPBEPS-ezK9L4WX_LEGSHekWERRM";
+    const sheetId = "1LAUjBLkDdhD1oQNqXP9-k9Vbn9sKOM5OHDKDo14UpeU";
     const base = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?`;
     const sheetName = "Statistics";
     const query = encodeURIComponent("Select *");
@@ -14,6 +15,7 @@ const fetchGoogleSheetsData = async () => {
             latest: [],
             distance: [],
             time: [],
+            teams: [],
         },
     };
     if (sheetsQuery.ok) {
@@ -28,22 +30,31 @@ const fetchGoogleSheetsData = async () => {
 
         // map columns to leaderboard keys
         const colKeys = {
-            2: "latest",
-            7: "distance",
-            10: "time",
+            2: { colKey: "latest", cols: 6 },
+            8: { colKey: "distance", cols: 3 },
+            12: { colKey: "time", cols: 3 },
+            19: { colKey: "teams", cols: 5 },
         };
 
-        const mapColToValue = (key, col, rowNum, colNum) => {
+        Object.keys(colKeys).forEach(
+            // get headings
+            (x) => {
+                const n = Number(x);
+                colKeys[n].headers = [...responseJson.table.cols].slice(
+                    n,
+                    n + Math.max(colKeys[n].cols || 0, 0)
+                );
+            }
+        );
+
+        const mapColToValues = (col, rowNum, colNum) => {
             // map columns to leaderboard structure
-            sheetsData.leaderboards[key].push({
-                position: col.v,
-                name: sheetsRows[rowNum][colNum + 1].v,
-                value: sheetsRows[rowNum][colNum + 2].v,
-                distance:
-                    key === "latest" ? sheetsRows[rowNum][colNum + 3].v : null,
-                time:
-                    key === "latest" ? sheetsRows[rowNum][colNum + 4].v : null,
+            const returnObject = {};
+            colKeys[colNum].headers.forEach((heading, i) => {
+                returnObject[camelCase(heading.label)] =
+                    sheetsRows[rowNum][colNum + i].v;
             });
+            sheetsData.leaderboards[colKeys[colNum].colKey].push(returnObject);
         };
 
         // process rows into usable sheetsData object
@@ -51,10 +62,11 @@ const fetchGoogleSheetsData = async () => {
             row.forEach((col, colNum) => {
                 if (colNum === 0 && col) {
                     // cols A:B - stats
-                    sheetsData[col.v] = sheetsRows[rowNum][colNum + 1].v;
+                    sheetsData[col.v] =
+                        sheetsRows[rowNum][colNum + 1]?.v || null;
                 } else if (colKeys[colNum] && col) {
                     // Other cols - leaderboards
-                    mapColToValue(colKeys[colNum], col, rowNum, colNum);
+                    mapColToValues(col, rowNum, colNum);
                 }
             });
         });
@@ -62,8 +74,13 @@ const fetchGoogleSheetsData = async () => {
         // console.error("Error fetching Google Sheets data");
     }
 
-    //make sure total distance is never more than the maximum possible distance according to the route
-    sheetsData["Total distance"] = Math.max(Math.min(sheetsData["Total distance"], totalDistanceInKilometres), 0);
+    // make sure total distance is never more than the maximum possible distance according to the route
+    sheetsData["Total distance"] = Math.max(
+        Math.min(sheetsData["Total distance"], totalDistanceInKilometres),
+        0
+    );
+
+    console.log(sheetsData);
 
     return sheetsData;
 };

@@ -6,17 +6,23 @@ const setTables = (sheetsData) => {
         {
             id: "tLatest",
             key: "latest",
-            types: ["dateTime", "distance", "duration"],
+            cols: [
+                { key: "timestamp", type: "dateTime" },
+                { key: "activity", type: "string" },
+                { key: "distance", type: "distance" },
+                { key: "time", type: "duration" },
+            ],
         },
         {
             id: "tDistance",
             key: "distance",
-            type: "distance",
+            cols: [{ key: "distance", type: "distance" }],
         },
         {
             id: "tTime",
             key: "time",
             type: "duration",
+            cols: [{ key: "time", type: "duration" }],
         },
     ];
 
@@ -25,26 +31,13 @@ const setTables = (sheetsData) => {
         sheetsData.leaderboards[x.key].forEach((entry, i) => {
             const row = table.insertRow(i);
             row.insertCell(0).innerText = entry.position || i + 1;
-            row.insertCell(1).innerText = entry.name;
-            if (x.key !== "latest") {
-                row.insertCell(2).innerText = formatSheetValue(
-                    entry.value,
-                    x.type
+            row.insertCell(1).innerText = entry.teamName;
+            x.cols.forEach((col, colNum) => {
+                row.insertCell(2 + colNum).innerText = formatSheetValue(
+                    entry[col.key],
+                    col.type
                 );
-            } else {
-                row.insertCell(2).innerText = formatSheetValue(
-                    entry.value,
-                    x.types[0]
-                );
-                row.insertCell(3).innerText = formatSheetValue(
-                    entry.distance,
-                    x.types[1]
-                );
-                row.insertCell(4).innerText = formatSheetValue(
-                    entry.time,
-                    x.types[2]
-                );
-            }
+            });
         });
     });
 };
