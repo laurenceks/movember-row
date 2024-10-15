@@ -80,7 +80,7 @@ const fetchGoogleSheetsData = async () => {
         0
     );
 
-    console.log(sheetsData);
+    // console.log(sheetsData);
 
     return sheetsData;
 };
