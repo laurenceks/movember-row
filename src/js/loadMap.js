@@ -1,8 +1,10 @@
 import bbox from "@turf/bbox";
 import camelcase from "camelcase";
+import mapboxgl from "mapbox-gl";
 import { routeLinestring } from "./geoData";
 import { routeStart } from "./data/route";
 import setScrolledIntoView from "./setScrolledIntoView";
+import createMapMarker from "./createMarker";
 
 const routeSource = { type: "geojson", data: { ...routeLinestring } };
 
@@ -30,9 +32,7 @@ const loadMap = (map, sheetsData, mapAnimationDurationInMs = 3000) => {
     sheetsData.leaderboards.teams
         .sort((a, b) => (a.distance <= b.distance ? 1 : -1))
         .forEach((team, i) => {
-            // eslint-disable-next-line no-param-reassign
             team.teamId = camelcase(team.teamName);
-            // eslint-disable-next-line no-param-reassign
             team.sourceId = `teamSource-${team.teamId}`;
             // add source and layer for each team
             map.addSource(team.sourceId, {
@@ -62,51 +62,13 @@ const loadMap = (map, sheetsData, mapAnimationDurationInMs = 3000) => {
                     "line-offset": 2 * i,
                 },
             });
+            team.marker = new mapboxgl.Marker(
+                createMapMarker(team.teamId, team.teamName)
+            )
+                .setLngLat(routeStart.geometry.coordinates)
+                .addTo(map);
         });
-    /*
-    new mapboxgl.Marker({ color: "#FFFFFF" })
-        .setLngLat(coordinates.start.LngLat)
-        .addTo(map);
-    new mapboxgl.Marker({ color: "#FFFFFF" })
-        .setLngLat(coordinates.end.LngLat)
-        .addTo(map);
-    const newMarker = document.createElement("div");
-    const markerIcon = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "svg"
-    );
-    const markerPath = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "path"
-    );
-    newMarker.className = `progressMarker p-2 ${routeDirection.horizontal} ${routeDirection.vertical}`;
-    markerIcon.setAttribute("stroke", "currentColor");
-    markerIcon.setAttribute("fill", "currentColor");
-    markerIcon.setAttribute("stroke-width", "0");
-    markerIcon.setAttribute("viewBox", "0 0 25 25");
-    markerIcon.setAttribute("width", "50");
-    markerIcon.setAttribute("height", "50");
-    markerIcon.setAttribute("preserveAspectRatio", "xMinYMin meet");
-    markerIcon.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-    markerPath.setAttribute(
-        "d",
-        "M8.5 14.5L4 19l1.5 1.5L9 17h2l-2.5-2.5zM15 1c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 20.01L18 24l-2.99-3.01V19.5l-7.1-7.09c-.31.05-.61.07-.91.07v-2.16c1.66.03 3.61-.87 4.67-2.04l1.4-1.55c.19-.21.43-.38.69-.5.29-.14.62-.23.96-.23h.03C15.99 6.01 17 7.02 17 8.26v5.75c0 .84-.35 1.61-.92 2.16l-3.58-3.58v-2.27c-.63.52-1.43 1.02-2.29 1.39L16.5 18H18l3 3.01z"
-    );
-    markerIcon.appendChild(markerPath);
-    const markerText = document.createElement("p");
-    markerText.className = "markerText p-1";
-    markerText.id = "mapCurrentDistance";
-    markerText.innerText = `${`${sheetsData["Total distance"].toLocaleString(
-        "en-GB"
-    )}km`} ${Math.round(
-        (sheetsData["Total distance"] / totalDistanceInKilometres) * 100
-    )}%`;
-    newMarker.appendChild(markerIcon);
-    newMarker.appendChild(markerText);
-    const progressMarkerMapBoxGl = new mapboxgl.Marker(newMarker)
-        .setLngLat(progressMarker.geometry.coordinates)
-        .addTo(map);
-*/
+
     zoomToFit(map);
 
     // add hidden replay button to be revealed after first animation
@@ -142,7 +104,6 @@ const loadMap = (map, sheetsData, mapAnimationDurationInMs = 3000) => {
     setScrolledIntoView({
         map,
         sheetsData,
-        // progressMarkerMapBoxGl,
         mapAnimationDurationInMs,
         replayButton,
     });

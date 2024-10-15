@@ -5,7 +5,6 @@ import animateMap from "./animateMap";
 const setScrolledIntoView = ({
     map,
     mapAnimationDurationInMs,
-    progressMarkerMapBoxGl,
     sheetsData,
     replayButton,
 }) => {
@@ -37,10 +36,7 @@ const setScrolledIntoView = ({
             // countUpMarker.start();
             animateMap(
                 map,
-                // progressMarkerMapBoxGl,
-                null,
                 sheetsData,
-                sheetsData["Total distance"],
                 scrolledIntoView,
                 mapAnimationDurationInMs
             );

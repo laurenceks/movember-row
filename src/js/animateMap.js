@@ -1,12 +1,11 @@
 import BezierEasing from "bezier-easing";
 import lineSliceAlong from "@turf/line-slice-along";
 import { routeLinestring } from "./data/route";
+import { totalDistanceInKilometres } from "./geoData";
 
 const animateMap = (
     map,
-    progressMarkerMapBoxGl,
     sheetsData,
-    distance = 0,
     scrolledIntoView = null,
     durationInMs = 3000
 ) => {
@@ -28,55 +27,33 @@ const animateMap = (
         const progressPercent = easing(runtime / durationInMs);
 
         if (progressPercent) {
+            // if progress is above zero (i.e. if animation has started), then update each team's line and marker
             sheetsData.leaderboards.teams.forEach((team) => {
-                map.getSource(team.sourceId).setData(
-                    lineSliceAlong(
-                        routeLinestring,
-                        0,
-                        progressPercent * team.distance,
-                        { units: "kilometers" }
-                    )
+                // calculate progress distance
+                const progressDistance = progressPercent * team.distance;
+
+                // line data
+                const newData = lineSliceAlong(
+                    routeLinestring,
+                    0,
+                    progressDistance,
+                    { units: "kilometers" }
                 );
+                map.getSource(team.sourceId).setData(newData);
+
+                // move marker to last point in new linstring
+                team.marker.setLngLat(newData.geometry.coordinates.pop());
+
+                // update marker text
+                document.getElementById(
+                    `${team.teamId}-mapTextTeamName`
+                ).innerText = `${team.teamName}\n${Math.round(
+                    progressDistance
+                )}km (${Math.round(
+                    (progressDistance / totalDistanceInKilometres) * 100
+                )}%)`;
             });
         }
-
-        /*
-                // calculate new coordinates based on current progress
-                const progressMarkerCoordinates = along(
-                    routeLinestring,
-                    distance * progressPercent,
-                    { units: "kilometers" }
-                ).geometry.coordinates;
-
-                const progressRouteCoordinates =
-                    progressMarkerCoordinates[0] === coordinates.start.long &&
-                    progressMarkerCoordinates[1] === coordinates.start.lat
-                        ? [coordinates.start.arrayLongLat, progressMarkerCoordinates]
-                        : greatCircle(
-                              coordinates.start.arrayLongLat,
-                              progressMarkerCoordinates
-                          ).geometry.coordinates;
-                const remainingRouteCoordinates = greatCircle(
-                    [...progressRouteCoordinates].pop(),
-                    coordinates.end.arrayLongLat
-                ).geometry.coordinates;
-                // update marker and lines
-                progressMarkerMapBoxGl.setLngLat(progressMarkerCoordinates);
-                map.getSource("progressRoute").setData({
-                    ...progressRoute.data,
-                    geometry: {
-                        ...progressRoute.data.geometry,
-                        coordinates: progressRouteCoordinates,
-                    },
-                });
-        */
-        /* map.getSource("remainingRoute").setData({
-            ...remainingRoute.data,
-            geometry: {
-                ...remainingRoute.data.geometry,
-                coordinates: remainingRouteCoordinates,
-            },
-        }); */
 
         // if not yet complete, request a new frame
         if (progressPercent < 1) {

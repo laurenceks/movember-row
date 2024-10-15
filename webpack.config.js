@@ -22,44 +22,60 @@ module.exports = {
         liveReload: true,
         hot: false,
     },
-    plugins: [new CopyPlugin({
-        patterns: [{
-            from: "public/img/",
-            to: "img/",
-        }],
-    }), new PurgecssPlugin({
-        paths: glob.sync([`${path.join(__dirname, "src")}/**/*`,
-                          `${path.join(__dirname, "dist")}/**/*`,
-                          `${path.join(__dirname, "public")}/**/*`], {nodir: true}),
-    }), new HtmlWebpackPlugin({template: "public/index.html"}), new MiniCssExtractPlugin({filename: "[name].css"})],
+    plugins: [
+        new CopyPlugin({
+            patterns: [
+                {
+                    from: "public/img/",
+                    to: "img/",
+                },
+            ],
+        }),
+        new PurgecssPlugin({
+            paths: glob.sync(
+                [
+                    `${path.join(__dirname, "src")}/**/*`,
+                    `${path.join(__dirname, "dist")}/**/*`,
+                    `${path.join(__dirname, "public")}/**/*`,
+                ],
+                { nodir: true }
+            ),
+        }),
+        new HtmlWebpackPlugin({ template: "public/index.html" }),
+        new MiniCssExtractPlugin({ filename: "[name].css" }),
+    ],
     mode: "development",
     module: {
-        rules: [{
-            test: /\.css$/i,
-            use: [MiniCssExtractPlugin.loader, "css-loader"],
-        }, {
-            test: /\.s[ac]ss$/i,
-            exclude: /node_modules/,
-            use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
-        }, {
-            test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
-            type: 'asset',
-            generator: {
-                filename: 'fonts/[hash][ext][query]',
+        rules: [
+            {
+                test: /\.css$/i,
+                use: [MiniCssExtractPlugin.loader, "css-loader"],
             },
-        }],
+            {
+                test: /\.s[ac]ss$/i,
+                exclude: /node_modules/,
+                use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+            },
+            {
+                test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
+                type: "asset",
+                generator: {
+                    filename: "fonts/[hash][ext][query]",
+                },
+            },
+        ],
     },
     optimization: {
         splitChunks: {
-            chunks: 'all',
+            chunks: "all",
             cacheGroups: {
                 vendor: {
                     test: /[\\/]node_modules[\\/]/,
-                    name: 'vendors',
-                    chunks: 'all',
+                    name: "vendors",
+                    chunks: "all",
                 },
             },
         },
-        runtimeChunk: "single"
+        runtimeChunk: "single",
     },
 };

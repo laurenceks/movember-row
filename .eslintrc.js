@@ -11,5 +11,6 @@ module.exports = {
     plugins: ["prettier"],
     rules: {
         "prettier/prettier": ["error", { tabWidth: 4 }],
+        "no-param-reassign": ["error", { props: false }],
     },
 };
