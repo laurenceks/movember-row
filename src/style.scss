@@ -30,9 +30,9 @@ body {
 
 html, body {
   @extend .h-100, .w-100;
-  --bs-body-font-family: "Overpass";
   font-size: 18px;
   font-weight: 300;
+  --bs-body-font-family: "Overpass";
 }
 
 @for $i from 1 through 6 {
@@ -47,15 +47,15 @@ a {
 }
 
 .dark {
-  background-color: #000000;
-  border-color: #000000;
   color: #ffffff;
+  border-color: #000000;
+  background-color: #000000;
 }
 
 .light {
-  background-color: #ffffff;
-  border-color: #ffffff;
   color: #000000;
+  border-color: #ffffff;
+  background-color: #ffffff;
 }
 
 .btn {
@@ -76,9 +76,9 @@ a[type='button'] {
 .btn.btn-xl {
   $btn-xl-underline-offset: 7px;
   font-size: 40px;
+  padding-bottom: calc(#{$btn-padding-y} + #{$btn-xl-underline-offset});
   text-decoration: underline;
   text-underline-offset: $btn-xl-underline-offset;
-  padding-bottom: calc(#{$btn-padding-y} + #{$btn-xl-underline-offset});
 }
 
 div.contentGrid {
@@ -133,22 +133,22 @@ div#mapDiv {
 }
 
 .mapboxgl-ctrl.mapboxgl-ctrl-attrib, .mapboxgl-ctrl.mapboxgl-ctrl-attrib * {
-  background: none !important;
-  color: #ffffff !important;
   font-family: var(--bs-body-font-family) !important;
   font-weight: 300 !important;
+  color: #ffffff !important;
+  background: none !important;
 }
 
 button.btn-map-replay {
   position: absolute;
-  bottom: 10px;
   right: 10px;
-  height: 56px;
+  bottom: 10px;
   width: 56px;
+  height: 56px;
   padding: 0;
-  background-color: $dark;
-  opacity: 1;
   transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+  opacity: 1;
+  background-color: $dark;
 }
 
 button.btn-map-replay.hidden {
@@ -230,8 +230,8 @@ table > thead > tr > th {
 }
 
 table, thead, tbody, tr, td {
-  border: 2px solid #ffffff;
   border-collapse: collapse;
+  border: 2px solid #ffffff;
 }
 
 td {
@@ -239,9 +239,9 @@ td {
 }
 
 table.table-ranking > tbody > tr > td:nth-of-type(1) {
-  border-right: none;
   font-size: initial;
   padding-top: $table-cell-padding-y !important;
+  border-right: none;
 }
 
 table.table-ranking > tbody > tr > td:nth-of-type(2) {
@@ -253,14 +253,15 @@ table.table-ranking > tbody > tr > td:nth-of-type(2) {
 }
 
 div.progressMarker {
-  color: #ffffff;
-  width: 50px;
-  min-height: 50px;
-  height: auto;
   display: flex;
+  align-items: center;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  box-sizing: content-box;
+  min-width: 50px;
+  height: auto;
+  min-height: 50px;
+  color: #ffffff;
 }
 
 div.progressMarker.rightToLeft > svg {
@@ -275,9 +276,19 @@ svg.icon {
 p.markerText {
   font-family: $headings-font-family;
   font-size: 20px;
-  color: #ffffff;
-  text-align: center;
   margin: 0;
+  text-align: center;
+  color: #ffffff;
+
+  &.markerTextTeamName {
+    font-size: 22px;
+    white-space: nowrap;
+  }
+
+  &.markerTextProgress {
+    font-size: 18px;
+    width: min-content;
+  }
 }
 
 
@@ -289,10 +300,10 @@ div.img-circle-wrap {
   width: 250px;
   height: 250px;
   border: 3px solid #000000;
-  object-fit: cover;
   background-image: url("data:image/svg+xml,%3Csvg stroke='currentColor' fill='currentColor' stroke-width='0' viewBox='0 0 496 512' height='1em' width='1em' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z'%3E%3C/path%3E%3C/svg%3E");
-  background-size: cover;
   background-repeat: no-repeat;
+  background-size: cover;
+  object-fit: cover;
 }
 
 img.img-circle {
@@ -317,7 +328,7 @@ ul.footerList {
 
 ul.footerList > li > a {
   @extend .py-2;
-  color: $light;
   text-decoration: none;
   text-transform: uppercase;
+  color: $light;
 }

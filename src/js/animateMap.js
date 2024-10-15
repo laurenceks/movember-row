@@ -46,10 +46,8 @@ const animateMap = (
 
                 // update marker text
                 document.getElementById(
-                    `${team.teamId}-mapTextTeamName`
-                ).innerText = `${team.teamName}\n${Math.round(
-                    progressDistance
-                )}km (${Math.round(
+                    `${team.teamId}-markerTextProgress`
+                ).innerText = `${Math.round(progressDistance)}km (${Math.round(
                     (progressDistance / totalDistanceInKilometres) * 100
                 )}%)`;
             });
