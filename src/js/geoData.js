@@ -1,11 +1,13 @@
-import mapboxgl from "mapbox-gl";
-import greatCircle from "@turf/great-circle";
 import length from "@turf/length";
-import linestring from "turf-linestring";
-import { routeStart, routeEnd, routeLinestring } from "./data/route";
+import lineSlice from "@turf/line-slice";
+import {
+    channelCrossingCoordinates,
+    routeEnd,
+    routeLinestring,
+    routeStart,
+} from "./data/route";
 
-// overall route
-
+// calculate direction for icons
 const routeDirection = {
     horizontal:
         routeStart.geometry.coordinates[0] >= routeEnd.geometry.coordinates[0]
@@ -17,54 +19,30 @@ const routeDirection = {
             : "up",
 };
 
-// create more convenient properties
-/*
-Object.keys(coordinates).forEach((x) => {
-    const val = coordinates[x];
-    coordinates[x].LngLat = new mapboxgl.LngLat(val.long, val.lat);
-    coordinates[x].fullLongLat = `${val.long}, ${val.lat}`;
-    coordinates[x].arrayLongLat = [val.long, val.lat];
-});
-*/
-
+// calculate key distances
 const totalDistanceInKilometres = length(routeLinestring);
-
-console.log(totalDistanceInKilometres);
-// route from start to current total distance rowed - starts with 0 distance initially
-// route from current position to end
-
-/*
-const remainingRoute = {
-    type: "geojson",
-    data: greatCircle(
-        coordinates.start.arrayLongLat,
-        coordinates.end.arrayLongLat
+const channelCrossingLengthsAlongRoute = {
+    start: length(
+        lineSlice(
+            routeStart.geometry.coordinates,
+            channelCrossingCoordinates.start,
+            routeLinestring
+        )
+    ),
+    end: length(
+        lineSlice(
+            routeStart.geometry.coordinates,
+            channelCrossingCoordinates.end,
+            routeLinestring
+        )
     ),
 };
-const progressRoute = {
-    type: "geojson",
-    data: {
-        type: "Feature",
-        geometry: {
-            type: "LineString",
-            coordinates: [
-                coordinates.start.arrayLongLat,
-                coordinates.start.arrayLongLat,
-            ],
-        },
-    },
-};
-*/
 
-/*
-const progressMarker = {
-    type: "Feature",
-    properties: null,
-    geometry: {
-        type: "Point",
-        coordinates: [...progressRoute.data.geometry.coordinates].pop(),
-    },
-};
-*/
+console.log(totalDistanceInKilometres);
 
-export { routeDirection, routeLinestring, totalDistanceInKilometres };
+export {
+    routeDirection,
+    routeLinestring,
+    totalDistanceInKilometres,
+    channelCrossingLengthsAlongRoute,
+};
