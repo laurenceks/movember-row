@@ -252,7 +252,7 @@ table.table-ranking > tbody > tr > td:nth-of-type(2) {
   font-size: 5rem;
 }
 
-div.progressMarker {
+div.progress-marker {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -262,10 +262,41 @@ div.progressMarker {
   height: auto;
   min-height: 50px;
   color: #ffffff;
-}
 
-div.progressMarker.rightToLeft > svg {
-  transform: scaleX(-1);
+  &.rightToLeft svg {
+    transform: scaleX(-1);
+  }
+
+  > .map-progress-marker-container {
+    display: grid;
+    grid-template: "container";
+    place-items: center;
+    place-content: center;
+
+    > svg {
+      transition: opacity 0.25s ease-out;
+      grid-area: container;
+
+      &:nth-child(2) {
+        opacity: 0;
+      }
+
+    }
+  }
+
+  &.progress-marker-swimmer-icon {
+    > .map-progress-marker-container {
+      > svg {
+        &:nth-child(1) {
+          opacity: 0;
+        }
+
+        &:nth-child(2) {
+          opacity: 1;
+        }
+      }
+    }
+  }
 }
 
 svg.icon {
@@ -273,19 +304,19 @@ svg.icon {
   height: 100%;
 }
 
-p.markerText {
+p.marker-text {
   font-family: $headings-font-family;
   font-size: 20px;
   margin: 0;
   text-align: center;
   color: #ffffff;
 
-  &.markerTextTeamName {
+  &.marker-text-team-name {
     font-size: 22px;
     white-space: nowrap;
   }
 
-  &.markerTextProgress {
+  &.marker-text-progress {
     font-size: 18px;
     width: min-content;
   }

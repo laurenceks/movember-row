@@ -49,6 +49,7 @@
     "@turf/bbox": "^6.5.0",
     "@turf/great-circle": "^6.5.0",
     "@turf/length": "^6.5.0",
+    "@turf/line-slice": "^7.1.0",
     "@turf/line-slice-along": "^6.5.0",
     "@turf/midpoint": "^6.5.0",
     "bezier-easing": "^2.1.0",
