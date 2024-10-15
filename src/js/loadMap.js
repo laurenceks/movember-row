@@ -29,45 +29,44 @@ const loadMap = (map, sheetsData, mapAnimationDurationInMs = 3000) => {
             "line-width": 2,
         },
     });
-    sheetsData.leaderboards.teams
-        .sort((a, b) => (a.distance <= b.distance ? 1 : -1))
-        .forEach((team, i) => {
-            team.teamId = camelcase(team.teamName);
-            team.sourceId = `teamSource-${team.teamId}`;
-            // add source and layer for each team
-            map.addSource(team.sourceId, {
-                type: "geojson",
-                data: {
-                    type: "FeatureCollection",
-                    features: [
-                        {
-                            type: "Feature",
-                            properties: {},
-                            geometry: { ...routeStart.geometry },
-                        },
-                    ],
-                },
-            });
-            map.addLayer({
-                id: `teamRoute-${team.teamId}`,
-                type: "line",
-                source: team.sourceId,
-                layout: {
-                    "line-join": "round",
-                    "line-cap": "round",
-                },
-                paint: {
-                    "line-color": team.colour,
-                    "line-width": 2,
-                    "line-offset": 2 * i,
-                },
-            });
-            team.marker = new mapboxgl.Marker(
-                createMapMarker(team.teamId, team.teamName)
-            )
-                .setLngLat(routeStart.geometry.coordinates)
-                .addTo(map);
+    sheetsData.leaderboards.teams.forEach((team, i) => {
+        team.teamId = camelcase(team.teamName);
+        team.sourceId = `teamSource-${team.teamId}`;
+        // add source and layer for each team
+        map.addSource(team.sourceId, {
+            type: "geojson",
+            data: {
+                type: "FeatureCollection",
+                features: [
+                    {
+                        type: "Feature",
+                        properties: {},
+                        geometry: { ...routeStart.geometry },
+                    },
+                ],
+            },
         });
+        map.addLayer({
+            id: `teamRoute-${team.teamId}`,
+            type: "line",
+            source: team.sourceId,
+            layout: {
+                "line-join": "round",
+                "line-cap": "round",
+            },
+            paint: {
+                "line-color": team.colour,
+                "line-width": 2,
+                "line-offset": 2 * i,
+            },
+        });
+        team.marker = new mapboxgl.Marker(
+            createMapMarker(team.teamId, team.teamName)
+        )
+            .setLngLat(routeStart.geometry.coordinates)
+            .addTo(map);
+        team.markerElement = team.marker.getElement();
+    });
 
     zoomToFit(map);
 

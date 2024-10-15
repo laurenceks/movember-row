@@ -1,7 +1,10 @@
 import BezierEasing from "bezier-easing";
 import lineSliceAlong from "@turf/line-slice-along";
 import { routeLinestring } from "./data/route";
-import { totalDistanceInKilometres } from "./geoData";
+import {
+    channelCrossingLengthsAlongRoute,
+    totalDistanceInKilometres,
+} from "./geoData";
 
 const animateMap = (
     map,
@@ -19,6 +22,7 @@ const animateMap = (
 
     const easing = BezierEasing(0.16, 1, 0.3, 1); // easeOutExpo to match countUp
     let startTime = null;
+
     const progressAnimation = (timestamp) => {
         if (!startTime) {
             startTime = timestamp;
@@ -41,15 +45,42 @@ const animateMap = (
                 );
                 map.getSource(team.sourceId).setData(newData);
 
-                // move marker to last point in new linstring
+                // move marker to last point in new linestring
                 team.marker.setLngLat(newData.geometry.coordinates.pop());
 
                 // update marker text
-                document.getElementById(
-                    `${team.teamId}-markerTextProgress`
-                ).innerText = `${Math.round(progressDistance)}km (${Math.round(
+                team.markerElement.lastElementChild.innerText = `${Math.round(
+                    progressDistance
+                )}km (${Math.round(
                     (progressDistance / totalDistanceInKilometres) * 100
                 )}%)`;
+
+                // if over channel and marker doesn't have swimming icon class
+                if (
+                    progressDistance >=
+                        channelCrossingLengthsAlongRoute.start &&
+                    progressDistance < channelCrossingLengthsAlongRoute.end
+                ) {
+                    if (
+                        !team.markerElement.classList.contains(
+                            "progress-marker-swimmer-icon"
+                        )
+                    ) {
+                        // add class
+                        team.markerElement.classList.add(
+                            "progress-marker-swimmer-icon"
+                        );
+                    }
+                } else if (
+                    team.markerElement.classList.contains(
+                        "progress-marker-swimmer-icon"
+                    )
+                ) {
+                    // remove class
+                    team.markerElement.classList.remove(
+                        "progress-marker-swimmer-icon"
+                    );
+                }
             });
         }
 
