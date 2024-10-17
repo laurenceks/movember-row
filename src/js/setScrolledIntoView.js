@@ -17,14 +17,11 @@ const setScrolledIntoView = ({
         { threshold: [1] }
     );
 
-    const { countUpRowed, countUpRaised, countUpMarker } = setCountUps(
-        sheetsData,
-        mapAnimationDurationInMs
-    );
+    const { countUpRowed, countUpRaised } = setCountUps(sheetsData);
 
     const scrolledIntoViewFunctionMap = {
-        statRowed: () => {
-            scrolledIntoView.unobserve(document.querySelector("#statRowed"));
+        statDistance: () => {
+            scrolledIntoView.unobserve(document.querySelector("#statDistance"));
             countUpRowed.start();
         },
         statRaised: () => {

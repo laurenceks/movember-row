@@ -74,9 +74,9 @@ const fetchGoogleSheetsData = async () => {
         console.error("Error fetching Google Sheets data");
     }
 
-    // make sure total distance is never more than the maximum possible distance according to the route
-    sheetsData["Total distance"] = Math.max(
-        Math.min(sheetsData["Total distance"], totalDistanceInKilometres),
+    // make sure max distance is never more than the maximum possible distance according to the route
+    sheetsData["Max distance"] = Math.max(
+        Math.min(sheetsData["Max distance"], totalDistanceInKilometres),
         0
     );
 
