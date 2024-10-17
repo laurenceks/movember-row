@@ -63,22 +63,22 @@ const animateMap = (
                 ) {
                     if (
                         !team.markerElement.classList.contains(
-                            "progress-marker-swimmer-icon"
+                            "map-progress-marker-over-channel"
                         )
                     ) {
                         // add class
                         team.markerElement.classList.add(
-                            "progress-marker-swimmer-icon"
+                            "map-progress-marker-over-channel"
                         );
                     }
                 } else if (
                     team.markerElement.classList.contains(
-                        "progress-marker-swimmer-icon"
+                        "map-progress-marker-over-channel"
                     )
                 ) {
                     // remove class
                     team.markerElement.classList.remove(
-                        "progress-marker-swimmer-icon"
+                        "map-progress-marker-over-channel"
                     );
                 }
             });

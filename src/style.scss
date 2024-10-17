@@ -263,7 +263,7 @@ div.progress-marker {
   min-height: 50px;
   color: #ffffff;
 
-  &.rightToLeft svg {
+  &.rightToLeft > div.map-progress-marker-container {
     transform: scaleX(-1);
   }
 
@@ -273,35 +273,44 @@ div.progress-marker {
     place-items: center;
     place-content: center;
 
-    > svg {
+    > .map-progress-marker-icon {
+      width: 50px;
+      height: 50px;
       transition: opacity 0.25s ease-out;
+      background-repeat: no-repeat;
+      background-position: center;
       grid-area: container;
 
-      &:nth-child(2) {
-        opacity: 0;
+      $icons: ("run", "walk", "swim", "hike", "row", "cycle");
+
+      @each $icon in $icons {
+        &.map-progress-marker-icon-#{$icon} {
+          background-image: url("../public/img/icons/#{$icon}.svg");
+        }
       }
 
+      &:nth-child(2) {
+        //swim icon
+        opacity: 0;
+      }
     }
   }
 
-  &.progress-marker-swimmer-icon {
+  &.map-progress-marker-over-channel {
     > .map-progress-marker-container {
-      > svg {
+      > .map-progress-marker-icon {
+        //hide land icon
         &:nth-child(1) {
           opacity: 0;
         }
 
+        //show swim icon
         &:nth-child(2) {
           opacity: 1;
         }
       }
     }
   }
-}
-
-svg.icon {
-  width: 100%;
-  height: 100%;
 }
 
 p.marker-text {
@@ -343,7 +352,7 @@ img.img-circle {
   border: 3px solid #ffffff;
 }
 
-rower-bio:nth-of-type(2n) > div.peopleWrap > div.peopleContainer {
+.rower-bio:nth-of-type(2n) > div.peopleWrap > div.peopleContainer {
   @extend .flex-sm-row-reverse;
 
   > p {

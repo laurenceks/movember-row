@@ -60,9 +60,7 @@ const loadMap = (map, sheetsData, mapAnimationDurationInMs = 3000) => {
                 "line-offset": 2 * i,
             },
         });
-        team.marker = new mapboxgl.Marker(
-            createMapMarker(team.teamId, team.teamName)
-        )
+        team.marker = new mapboxgl.Marker(createMapMarker(team))
             .setLngLat(routeStart.geometry.coordinates)
             .addTo(map);
         team.markerElement = team.marker.getElement();
