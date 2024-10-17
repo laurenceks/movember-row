@@ -4,7 +4,7 @@ import { totalDistanceInKilometres } from "./geoData";
 const fetchGoogleSheetsData = async () => {
     const sheetId = "1LAUjBLkDdhD1oQNqXP9-k9Vbn9sKOM5OHDKDo14UpeU";
     const base = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?`;
-    const sheetName = "Statistics";
+    const sheetName = "api";
     const query = encodeURIComponent("Select *");
     const url = `${base}&sheet=${sheetName}&tq=${query}`;
 
@@ -19,7 +19,7 @@ const fetchGoogleSheetsData = async () => {
         },
     };
     if (sheetsQuery.ok) {
-        // Strip leading characters Google send back
+        // strip leading characters Google send back
         const responseJson = JSON.parse(
             (await sheetsQuery.text()).substring(47).slice(0, -2)
         );
@@ -32,8 +32,8 @@ const fetchGoogleSheetsData = async () => {
         const colKeys = {
             2: { colKey: "latest", cols: 6 },
             8: { colKey: "distance", cols: 3 },
-            12: { colKey: "time", cols: 3 },
-            19: { colKey: "teams", cols: 5 },
+            11: { colKey: "time", cols: 3 },
+            14: { colKey: "teams", cols: 6 },
         };
 
         Object.keys(colKeys).forEach(
@@ -71,7 +71,7 @@ const fetchGoogleSheetsData = async () => {
             });
         });
     } else {
-        // console.error("Error fetching Google Sheets data");
+        console.error("Error fetching Google Sheets data");
     }
 
     // make sure total distance is never more than the maximum possible distance according to the route
