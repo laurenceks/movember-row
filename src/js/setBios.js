@@ -3,7 +3,7 @@ import Bio from "../components/Bio";
 const setBios = ({ leaderboards: { teams } }) => {
     customElements.define("team-bio", Bio);
 
-    teams
+    [...teams]
         .sort((a, b) => (a.bioOrder >= b.bioOrder ? 1 : -1))
         .forEach((team) => {
             const newBio = document.createElement("team-bio");

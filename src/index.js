@@ -10,7 +10,6 @@ import "bootstrap/js/dist/button";
 import "bootstrap/js/dist/collapse";
 
 const init = async () => {
-    const mapAnimationDurationInMs = 3000;
     const sheetsData = await fetchGoogleSheetsData();
 
     // populate bios
@@ -20,7 +19,7 @@ const init = async () => {
     setTables(sheetsData);
 
     // initialise map - on load scrolled into view and CountUps applied
-    initMap(sheetsData, mapAnimationDurationInMs);
+    initMap(sheetsData);
 };
 
 document.addEventListener("DOMContentLoaded", () => getCookieConsent(init));

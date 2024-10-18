@@ -4,7 +4,7 @@ import MAPBOX_ACCESS_TOKEN from "./data/tokens";
 import loadMap from "./loadMap";
 import { routeEnd, routeStart } from "./data/route";
 
-const initMap = (sheetsData, mapAnimationDurationInMs = 3000) => {
+const initMap = (sheetsData) => {
     mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
 
     // initialise map
@@ -20,7 +20,7 @@ const initMap = (sheetsData, mapAnimationDurationInMs = 3000) => {
         interactive: false,
     });
 
-    map.on("load", () => loadMap(map, sheetsData, mapAnimationDurationInMs));
+    map.on("load", () => loadMap(map, sheetsData));
 };
 
 export default initMap;

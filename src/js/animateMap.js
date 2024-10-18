@@ -6,12 +6,16 @@ import {
     totalDistanceInKilometres,
 } from "./geoData";
 
-const animateMap = (
-    map,
-    sheetsData,
-    scrolledIntoView = null,
-    durationInMs = 3000
-) => {
+const animateMap = (map, sheetsData, scrolledIntoView = null) => {
+    // calculate total duration based on percentage of goal
+    const durationInMs =
+        10000 *
+        Math.min(
+            1,
+            (sheetsData.leaderboards.distance[0]?.distance || 0) /
+                totalDistanceInKilometres
+        );
+
     if (scrolledIntoView) {
         // make sure the event listener only fires once
         scrolledIntoView.unobserve(document.querySelector("#map"));
@@ -33,53 +37,55 @@ const animateMap = (
         if (progressPercent) {
             // if progress is above zero (i.e. if animation has started), then update each team's line and marker
             sheetsData.leaderboards.teams.forEach((team) => {
-                // calculate progress distance
-                const progressDistance = progressPercent * team.distance;
+                if (team.distance) {
+                    // calculate progress distance
+                    const progressDistance = progressPercent * team.distance;
 
-                // line data
-                const newData = lineSliceAlong(
-                    routeLinestring,
-                    0,
-                    progressDistance,
-                    { units: "kilometers" }
-                );
-                map.getSource(team.sourceId).setData(newData);
+                    // line data
+                    const newData = lineSliceAlong(
+                        routeLinestring,
+                        0,
+                        progressDistance,
+                        { units: "kilometers" }
+                    );
+                    map.getSource(team.sourceId).setData(newData);
 
-                // move marker to last point in new linestring
-                team.marker.setLngLat(newData.geometry.coordinates.pop());
+                    // move marker to last point in new linestring
+                    team.marker.setLngLat(newData.geometry.coordinates.pop());
 
-                // update marker text
-                team.markerElement.lastElementChild.innerText = `${Math.round(
-                    progressDistance
-                )}km (${Math.round(
-                    (progressDistance / totalDistanceInKilometres) * 100
-                )}%)`;
+                    // update marker text
+                    team.markerElement.lastElementChild.innerText = `${Math.round(
+                        progressDistance
+                    )}km (${Math.round(
+                        (progressDistance / totalDistanceInKilometres) * 100
+                    )}%)`;
 
-                // if over channel and marker doesn't have swimming icon class
-                if (
-                    progressDistance >=
-                        channelCrossingLengthsAlongRoute.start &&
-                    progressDistance < channelCrossingLengthsAlongRoute.end
-                ) {
+                    // if over channel and marker doesn't have swimming icon class
                     if (
-                        !team.markerElement.classList.contains(
+                        progressDistance >=
+                            channelCrossingLengthsAlongRoute.start &&
+                        progressDistance < channelCrossingLengthsAlongRoute.end
+                    ) {
+                        if (
+                            !team.markerElement.classList.contains(
+                                "map-progress-marker-over-channel"
+                            )
+                        ) {
+                            // add class
+                            team.markerElement.classList.add(
+                                "map-progress-marker-over-channel"
+                            );
+                        }
+                    } else if (
+                        team.markerElement.classList.contains(
                             "map-progress-marker-over-channel"
                         )
                     ) {
-                        // add class
-                        team.markerElement.classList.add(
+                        // remove class
+                        team.markerElement.classList.remove(
                             "map-progress-marker-over-channel"
                         );
                     }
-                } else if (
-                    team.markerElement.classList.contains(
-                        "map-progress-marker-over-channel"
-                    )
-                ) {
-                    // remove class
-                    team.markerElement.classList.remove(
-                        "map-progress-marker-over-channel"
-                    );
                 }
             });
         }

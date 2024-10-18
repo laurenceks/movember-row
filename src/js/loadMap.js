@@ -14,7 +14,7 @@ const zoomToFit = (map) =>
         offset: [0, 10],
     });
 
-const loadMap = (map, sheetsData, mapAnimationDurationInMs = 3000) => {
+const loadMap = (map, sheetsData) => {
     map.addSource("route", routeSource);
     map.addLayer({
         id: "route",
@@ -29,6 +29,7 @@ const loadMap = (map, sheetsData, mapAnimationDurationInMs = 3000) => {
             "line-width": 2,
         },
     });
+
     sheetsData.leaderboards.teams.forEach((team, i) => {
         team.teamId = camelcase(team.teamName);
         team.sourceId = `teamSource-${team.teamId}`;
@@ -46,6 +47,7 @@ const loadMap = (map, sheetsData, mapAnimationDurationInMs = 3000) => {
                 ],
             },
         });
+
         map.addLayer({
             id: `teamRoute-${team.teamId}`,
             type: "line",
@@ -60,6 +62,7 @@ const loadMap = (map, sheetsData, mapAnimationDurationInMs = 3000) => {
                 "line-offset": 2 * i,
             },
         });
+
         team.marker = new mapboxgl.Marker(createMapMarker(team))
             .setLngLat(routeStart.geometry.coordinates)
             .addTo(map);
@@ -101,7 +104,6 @@ const loadMap = (map, sheetsData, mapAnimationDurationInMs = 3000) => {
     setScrolledIntoView({
         map,
         sheetsData,
-        mapAnimationDurationInMs,
         replayButton,
     });
 };

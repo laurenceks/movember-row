@@ -2,12 +2,7 @@
 import setCountUps from "./setCountUps";
 import animateMap from "./animateMap";
 
-const setScrolledIntoView = ({
-    map,
-    mapAnimationDurationInMs,
-    sheetsData,
-    replayButton,
-}) => {
+const setScrolledIntoView = ({ map, sheetsData, replayButton }) => {
     const scrolledIntoView = new IntersectionObserver(
         (entries) => {
             if (entries[0].isIntersecting) {
@@ -29,12 +24,7 @@ const setScrolledIntoView = ({
             countUpRaised.start();
         },
         map: () => {
-            animateMap(
-                map,
-                sheetsData,
-                scrolledIntoView,
-                mapAnimationDurationInMs
-            );
+            animateMap(map, sheetsData, scrolledIntoView);
         },
     };
 
