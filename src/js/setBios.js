@@ -1,22 +1,22 @@
 import Bio from "../components/Bio";
-import bios from "./data/bios";
 
-const setBios = () => {
+const setBios = ({ leaderboards: { teams } }) => {
+    customElements.define("team-bio", Bio);
 
-    customElements.define("rower-bio", Bio);
-
-    bios.forEach((x) => {
-        const newBio = document.createElement("rower-bio");
-        if (x.imgSrc) {
-            newBio.setAttribute("src", x.imgSrc);
-            if(x.src2x){
-                newBio.setAttribute("src2x", x.src2x);
+    teams
+        .sort((a, b) => (a.bioOrder >= b.bioOrder ? 1 : -1))
+        .forEach((team) => {
+            const newBio = document.createElement("team-bio");
+            if (team.imgSrc) {
+                newBio.setAttribute("src", team.imgSrc);
+                if (team.src2x) {
+                    newBio.setAttribute("src2x", team.src2x);
+                }
             }
-        }
-        newBio.setAttribute("name", x.name);
-        newBio.setAttribute("body", x.body);
-        document.getElementById("bioContainer").appendChild(newBio);
-    });
+            newBio.setAttribute("name", team.teamName);
+            newBio.setAttribute("body", team.body);
+            document.getElementById("bioContainer").appendChild(newBio);
+        });
 };
 
 export default setBios;

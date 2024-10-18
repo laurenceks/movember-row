@@ -352,7 +352,7 @@ img.img-circle {
   border: 3px solid #ffffff;
 }
 
-.rower-bio:nth-of-type(2n) > div.peopleWrap > div.peopleContainer {
+team-bio:nth-of-type(2n) > div.peopleWrap > div.peopleContainer {
   @extend .flex-sm-row-reverse;
 
   > p {

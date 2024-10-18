@@ -13,7 +13,8 @@ const init = async () => {
     const mapAnimationDurationInMs = 3000;
     const sheetsData = await fetchGoogleSheetsData();
 
-    setBios();
+    // populate bios
+    setBios(sheetsData);
 
     // populate tables
     setTables(sheetsData);
