@@ -57,9 +57,12 @@ const animateMap = (map, sheetsData, scrolledIntoView = null) => {
                                 )
                         );
                     // calculate progress distance
+                    const teamProgressPercent = Math.min(
+                        1,
+                        easing(runtime / teamDurationInMs)
+                    );
                     const teamProgressDistance =
-                        Math.min(1, easing(runtime / teamDurationInMs)) *
-                        safeTeamDistance;
+                        teamProgressPercent * safeTeamDistance;
 
                     // line data
                     const newData = lineSliceAlong(
@@ -76,9 +79,7 @@ const animateMap = (map, sheetsData, scrolledIntoView = null) => {
                     // update marker text
                     team.markerElement.lastElementChild.innerText = `${Math.round(
                         teamProgressDistance
-                    )}km (${Math.round(
-                        (teamProgressDistance / totalDistanceInKilometres) * 100
-                    )}%)`;
+                    )}km (${Math.round(teamProgressPercent * 100)}%)`;
 
                     // if over channel and marker doesn't have swimming icon class
                     if (
