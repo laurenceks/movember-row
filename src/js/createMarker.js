@@ -5,7 +5,12 @@ const createMapMarkerIcon = (type = "run") => {
     markerIcon.className = `map-progress-marker-icon map-progress-marker-icon-${type}`;
     return markerIcon;
 };
-const createMapMarker = ({ teamId, teamName, modeActivity }) => {
+const createMapMarker = ({
+    teamId,
+    teamName,
+    modeActivityLand,
+    modeActivityWater,
+}) => {
     const newMapMarker = document.createElement("div");
     newMapMarker.id = `progressMarker-${teamId}`;
     newMapMarker.className = `progress-marker p-2 ${routeDirection.horizontal} ${routeDirection.vertical}`;
@@ -25,11 +30,13 @@ const createMapMarker = ({ teamId, teamName, modeActivity }) => {
 
     // type icon
     markerContainer.appendChild(
-        createMapMarkerIcon(modeActivity.toLowerCase())
+        createMapMarkerIcon(modeActivityLand.toLowerCase())
     );
 
     // swimmer icon
-    markerContainer.appendChild(createMapMarkerIcon("swim"));
+    markerContainer.appendChild(
+        createMapMarkerIcon(modeActivityWater.toLowerCase())
+    );
 
     newMapMarker.appendChild(markerContainer);
     newMapMarker.appendChild(markerTextTeamName);

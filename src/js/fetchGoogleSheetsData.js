@@ -33,7 +33,7 @@ const fetchGoogleSheetsData = async () => {
             2: { colKey: "latest", cols: 6 },
             8: { colKey: "distance", cols: 3 },
             11: { colKey: "time", cols: 3 },
-            14: { colKey: "teams", cols: 10 },
+            14: { colKey: "teams", cols: 11 },
         };
 
         Object.keys(colKeys).forEach(
