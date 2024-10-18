@@ -7,15 +7,6 @@ import {
 } from "./geoData";
 
 const animateMap = (map, sheetsData, scrolledIntoView = null) => {
-    // calculate total duration based on percentage of goal
-    const durationInMs =
-        10000 *
-        Math.min(
-            1,
-            (sheetsData.leaderboards.distance[0]?.distance || 0) /
-                totalDistanceInKilometres
-        );
-
     if (scrolledIntoView) {
         // make sure the event listener only fires once
         scrolledIntoView.unobserve(document.querySelector("#map"));
@@ -25,27 +16,56 @@ const animateMap = (map, sheetsData, scrolledIntoView = null) => {
     document.getElementById("btnMapReplay").classList.add("hidden");
 
     const easing = BezierEasing(0.16, 1, 0.3, 1); // easeOutExpo to match countUp
+    // calculate total duration based on percentage of goal
     let startTime = null;
+    const durationInMs =
+        10000 *
+        Math.min(
+            1,
+            (sheetsData.leaderboards.teams[0]?.distance || 0) /
+                totalDistanceInKilometres
+        );
 
     const progressAnimation = (timestamp) => {
         if (!startTime) {
             startTime = timestamp;
         }
+
         const runtime = timestamp - startTime;
+
+        // calculate progress distance
         const progressPercent = easing(runtime / durationInMs);
 
         if (progressPercent) {
             // if progress is above zero (i.e. if animation has started), then update each team's line and marker
             sheetsData.leaderboards.teams.forEach((team) => {
                 if (team.distance) {
+                    const safeTeamDistance = Math.min(
+                        totalDistanceInKilometres,
+                        team.distance || 0
+                    );
+                    // calculate total duration based on percentage of goal
+                    const teamDurationInMs =
+                        durationInMs *
+                        Math.min(
+                            1,
+                            safeTeamDistance /
+                                Math.min(
+                                    totalDistanceInKilometres,
+                                    sheetsData.leaderboards.teams[0]
+                                        ?.distance || 0
+                                )
+                        );
                     // calculate progress distance
-                    const progressDistance = progressPercent * team.distance;
+                    const teamProgressDistance =
+                        Math.min(1, easing(runtime / teamDurationInMs)) *
+                        safeTeamDistance;
 
                     // line data
                     const newData = lineSliceAlong(
                         routeLinestring,
                         0,
-                        progressDistance,
+                        teamProgressDistance,
                         { units: "kilometers" }
                     );
                     map.getSource(team.sourceId).setData(newData);
@@ -55,16 +75,17 @@ const animateMap = (map, sheetsData, scrolledIntoView = null) => {
 
                     // update marker text
                     team.markerElement.lastElementChild.innerText = `${Math.round(
-                        progressDistance
+                        teamProgressDistance
                     )}km (${Math.round(
-                        (progressDistance / totalDistanceInKilometres) * 100
+                        (teamProgressDistance / totalDistanceInKilometres) * 100
                     )}%)`;
 
                     // if over channel and marker doesn't have swimming icon class
                     if (
-                        progressDistance >=
+                        teamProgressDistance >=
                             channelCrossingLengthsAlongRoute.start &&
-                        progressDistance < channelCrossingLengthsAlongRoute.end
+                        teamProgressDistance <
+                            channelCrossingLengthsAlongRoute.end
                     ) {
                         if (
                             !team.markerElement.classList.contains(
