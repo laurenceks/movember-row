@@ -261,10 +261,16 @@ div.progress-marker {
   min-width: 50px;
   height: auto;
   min-height: 50px;
+  transition: opacity 0.25s ease-out;
   color: #ffffff;
 
   &.rightToLeft > div.map-progress-marker-container {
     transform: scaleX(-1);
+  }
+
+  & :has(> *:hover) ~ div.progress-marker,
+  &:has(~div.progress-marker > *:hover) {
+    opacity: 0.2
   }
 
   > .map-progress-marker-container {
