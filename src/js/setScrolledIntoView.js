@@ -29,8 +29,6 @@ const setScrolledIntoView = ({
             countUpRaised.start();
         },
         map: () => {
-            // countUpMarker.reset();
-            // countUpMarker.start();
             animateMap(
                 map,
                 sheetsData,
