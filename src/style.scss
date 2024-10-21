@@ -270,7 +270,7 @@ div.progress-marker {
   }
 
   &:has(~ div.progress-marker div.map-progress-marker-icon:hover),
-  &:has(> div.map-progress-marker-icon:hover) ~ div.progress-marker,
+  &:has(div.map-progress-marker-icon:hover) ~ div.progress-marker,
   &:has(~ div.progress-marker .progress-marker-text:hover),
   &:has(> .progress-marker-text:hover) ~ div.progress-marker {
     opacity: 0.2;
