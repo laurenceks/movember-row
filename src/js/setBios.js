@@ -14,7 +14,7 @@ const setBios = ({ leaderboards: { teams } }) => {
                 }
             }
             newBio.setAttribute("name", team.teamName);
-            newBio.setAttribute("body", team.body);
+            newBio.setAttribute("body", team.body || "");
             document.getElementById("bioContainer").appendChild(newBio);
         });
 };

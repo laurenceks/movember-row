@@ -52,7 +52,7 @@ const fetchGoogleSheetsData = async () => {
             const returnObject = {};
             colKeys[colNum].headers.forEach((heading, i) => {
                 returnObject[camelCase(heading.label)] =
-                    sheetsRows[rowNum][colNum + i].v;
+                    sheetsRows[rowNum][colNum + i]?.v || null;
             });
             sheetsData.leaderboards[colKeys[colNum].colKey].push(returnObject);
         };
