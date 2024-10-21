@@ -16,12 +16,14 @@ const createMapMarker = ({
     newMapMarker.className = `progress-marker p-2 ${routeDirection.horizontal} ${routeDirection.vertical}`;
 
     const markerTextTeamName = document.createElement("p");
-    markerTextTeamName.className = "marker-text marker-text-team-name p-1";
+    markerTextTeamName.className =
+        "progress-marker-text progress-marker-text-team-name p-1";
     markerTextTeamName.id = `${teamId}-markerTextTeamName`;
     markerTextTeamName.innerText = teamName;
 
     const markerTextProgress = document.createElement("p");
-    markerTextProgress.className = "marker-text marker-text-progress p-1";
+    markerTextProgress.className =
+        "progress-marker-text progress-marker-text-progress p-1";
     markerTextProgress.id = `${teamId}-markerTextProgress`;
     markerTextProgress.innerText = `0km (0%)`;
 

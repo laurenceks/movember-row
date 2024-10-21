@@ -262,15 +262,18 @@ div.progress-marker {
   height: auto;
   min-height: 50px;
   transition: opacity 0.25s ease-out;
+  pointer-events: none;
   color: #ffffff;
 
   &.rightToLeft > div.map-progress-marker-container {
     transform: scaleX(-1);
   }
 
-  & :has(> *:hover) ~ div.progress-marker,
-  &:has(~div.progress-marker > *:hover) {
-    opacity: 0.2
+  &:has(~ div.progress-marker div.map-progress-marker-icon:hover),
+  &:has(> div.map-progress-marker-icon:hover) ~ div.progress-marker,
+  &:has(~ div.progress-marker .progress-marker-text:hover),
+  &:has(> .progress-marker-text:hover) ~ div.progress-marker {
+    opacity: 0.2;
   }
 
   > .map-progress-marker-container {
@@ -283,6 +286,7 @@ div.progress-marker {
       width: 50px;
       height: 50px;
       transition: opacity 0.25s ease-out;
+      pointer-events: auto;
       background-repeat: no-repeat;
       background-position: center;
       grid-area: container;
@@ -319,19 +323,20 @@ div.progress-marker {
   }
 }
 
-p.marker-text {
+p.progress-marker-text {
   font-family: $headings-font-family;
   font-size: 20px;
   margin: 0;
   text-align: center;
+  pointer-events: auto;
   color: #ffffff;
 
-  &.marker-text-team-name {
+  &.progress-marker-text-team-name {
     font-size: 22px;
     white-space: nowrap;
   }
 
-  &.marker-text-progress {
+  &.progress-marker-text-progress {
     font-size: 18px;
     width: min-content;
   }
