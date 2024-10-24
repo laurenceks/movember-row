@@ -287,15 +287,18 @@ div.progress-marker {
       height: 50px;
       transition: opacity 0.25s ease-out;
       pointer-events: auto;
-      background-repeat: no-repeat;
-      background-position: center;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      mask-position: center;
+      -webkit-mask-position: center;
       grid-area: container;
 
       $icons: ("run", "walk", "swim", "hike", "row", "cycle");
 
       @each $icon in $icons {
         &.map-progress-marker-icon-#{$icon} {
-          background-image: url("../public/img/icons/#{$icon}.svg");
+          -webkit-mask-image: url("../public/img/icons/#{$icon}.svg");
+          mask-image: url("../public/img/icons/#{$icon}.svg");
         }
       }
 

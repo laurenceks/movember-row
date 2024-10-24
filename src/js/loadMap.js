@@ -33,6 +33,7 @@ const loadMap = (map, sheetsData) => {
     sheetsData.leaderboards.teams.forEach((team, i) => {
         team.teamId = camelcase(team.teamName);
         team.sourceId = `teamSource-${team.teamId}`;
+        team.layerId = `teamRoute-${team.teamId}`;
         // add source and layer for each team
         map.addSource(team.sourceId, {
             type: "geojson",
@@ -49,7 +50,7 @@ const loadMap = (map, sheetsData) => {
         });
 
         map.addLayer({
-            id: `teamRoute-${team.teamId}`,
+            id: team.layerId,
             type: "line",
             source: team.sourceId,
             layout: {
@@ -57,7 +58,7 @@ const loadMap = (map, sheetsData) => {
                 "line-cap": "round",
             },
             paint: {
-                "line-color": team.colour,
+                "line-color": team.lineColour,
                 "line-width": 2,
                 "line-offset": 2 * i,
             },
@@ -67,6 +68,28 @@ const loadMap = (map, sheetsData) => {
             .setLngLat(routeStart.geometry.coordinates)
             .addTo(map);
         team.markerElement = team.marker.getElement();
+        team.markerElement
+            .querySelectorAll(
+                ".map-progress-marker-icon, .progress-marker-text"
+            )
+            .forEach((markerElementChild) => {
+                markerElementChild.addEventListener("mouseover", () => {
+                    sheetsData.leaderboards.teams.forEach((t) => {
+                        if (t.teamId !== team.teamId) {
+                            map.setPaintProperty(
+                                t.layerId,
+                                "line-opacity",
+                                0.2
+                            );
+                        }
+                    });
+                });
+                markerElementChild.addEventListener("mouseout", () => {
+                    sheetsData.leaderboards.teams.forEach((t) => {
+                        map.setPaintProperty(t.layerId, "line-opacity", 1);
+                    });
+                });
+            });
     });
 
     zoomToFit(map);

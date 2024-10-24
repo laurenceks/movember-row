@@ -1,13 +1,16 @@
 import { routeDirection } from "./geoData";
 
-const createMapMarkerIcon = (type = "run") => {
+const createMapMarkerIcon = (type = "run", colour = "#ffffff") => {
     const markerIcon = document.createElement("div");
     markerIcon.className = `map-progress-marker-icon map-progress-marker-icon-${type}`;
+    markerIcon.style.backgroundColor = colour;
     return markerIcon;
 };
 const createMapMarker = ({
     teamId,
     teamName,
+    iconColour,
+    textColour,
     modeActivityLand,
     modeActivityWater,
 }) => {
@@ -20,24 +23,26 @@ const createMapMarker = ({
         "progress-marker-text progress-marker-text-team-name p-1";
     markerTextTeamName.id = `${teamId}-markerTextTeamName`;
     markerTextTeamName.innerText = teamName;
+    markerTextTeamName.style.color = textColour;
 
     const markerTextProgress = document.createElement("p");
     markerTextProgress.className =
         "progress-marker-text progress-marker-text-progress p-1";
     markerTextProgress.id = `${teamId}-markerTextProgress`;
     markerTextProgress.innerText = `0km (0%)`;
+    markerTextProgress.style.color = textColour;
 
     const markerContainer = document.createElement("div");
     markerContainer.className = "map-progress-marker-container";
 
     // type icon
     markerContainer.appendChild(
-        createMapMarkerIcon(modeActivityLand.toLowerCase())
+        createMapMarkerIcon(modeActivityLand.toLowerCase(), iconColour)
     );
 
     // swimmer icon
     markerContainer.appendChild(
-        createMapMarkerIcon(modeActivityWater.toLowerCase())
+        createMapMarkerIcon(modeActivityWater.toLowerCase(), iconColour)
     );
 
     newMapMarker.appendChild(markerContainer);
