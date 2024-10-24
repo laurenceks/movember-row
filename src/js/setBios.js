@@ -8,9 +8,9 @@ const setBios = ({ leaderboards: { teams } }) => {
         .forEach((team) => {
             const newBio = document.createElement("team-bio");
             if (team.imgSrc) {
-                newBio.setAttribute("src", team.imgSrc);
-                if (team.src2x) {
-                    newBio.setAttribute("src2x", team.src2x);
+                newBio.setAttribute("src", `/img/teams/${team.imgSrc}`);
+                if (team.src2X) {
+                    newBio.setAttribute("src2x", `/img/teams/${team.imgSrc}`);
                 }
             }
             newBio.setAttribute("name", team.teamName);
