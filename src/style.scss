@@ -47,15 +47,15 @@ a {
 }
 
 .dark {
-  color: #ffffff;
   border-color: #000000;
   background-color: #000000;
+  color: #ffffff;
 }
 
 .light {
-  color: #000000;
   border-color: #ffffff;
   background-color: #ffffff;
+  color: #000000;
 }
 
 .btn {
@@ -63,8 +63,8 @@ a {
 }
 
 a[type='button'] {
-  -webkit-appearance: none;
   -moz-appearance: none;
+  -webkit-appearance: none;
   appearance: none;
 }
 
@@ -75,9 +75,9 @@ a[type='button'] {
 
 .btn.btn-xl {
   $btn-xl-underline-offset: 7px;
-  font-size: 40px;
   padding-bottom: calc(#{$btn-padding-y} + #{$btn-xl-underline-offset});
   text-decoration: underline;
+  font-size: 40px;
   text-underline-offset: $btn-xl-underline-offset;
 }
 
@@ -105,8 +105,8 @@ sup > a {
 }
 
 sup.display-1-sup {
-  font-size: 0.5em;
   top: -1.25em;
+  font-size: 0.5em;
 }
 
 @media (max-width: 600px) and (orientation: portrait) {
@@ -133,22 +133,22 @@ div#mapDiv {
 }
 
 .mapboxgl-ctrl.mapboxgl-ctrl-attrib, .mapboxgl-ctrl.mapboxgl-ctrl-attrib * {
+  background: none !important;
+  color: #ffffff !important;
   font-family: var(--bs-body-font-family) !important;
   font-weight: 300 !important;
-  color: #ffffff !important;
-  background: none !important;
 }
 
 button.btn-map-replay {
   position: absolute;
   right: 10px;
   bottom: 10px;
-  width: 56px;
-  height: 56px;
-  padding: 0;
   transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
   opacity: 1;
   background-color: $dark;
+  padding: 0;
+  width: 56px;
+  height: 56px;
 }
 
 button.btn-map-replay.hidden {
@@ -158,8 +158,8 @@ button.btn-map-replay.hidden {
 
 p.cover-title {
   @extend .h1;
-  font-size: 120pt;
   align-self: end;
+  font-size: 120pt;
 }
 
 table {
@@ -230,8 +230,8 @@ table > thead > tr > th {
 }
 
 table, thead, tbody, tr, td {
-  border-collapse: collapse;
   border: 2px solid #ffffff;
+  border-collapse: collapse;
 }
 
 td {
@@ -239,9 +239,9 @@ td {
 }
 
 table.table-ranking > tbody > tr > td:nth-of-type(1) {
-  font-size: initial;
-  padding-top: $table-cell-padding-y !important;
   border-right: none;
+  padding-top: $table-cell-padding-y !important;
+  font-size: initial;
 }
 
 table.table-ranking > tbody > tr > td:nth-of-type(2) {
@@ -253,17 +253,18 @@ table.table-ranking > tbody > tr > td:nth-of-type(2) {
 }
 
 div.progress-marker {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
   box-sizing: content-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.25s ease-out;
+  cursor: default;
   min-width: 50px;
   height: auto;
   min-height: 50px;
-  transition: opacity 0.25s ease-out;
-  pointer-events: none;
   color: #ffffff;
+  pointer-events: none;
 
   &.rightToLeft > div.map-progress-marker-container {
     transform: scaleX(-1);
@@ -279,19 +280,19 @@ div.progress-marker {
   > .map-progress-marker-container {
     display: grid;
     grid-template: "container";
-    place-items: center;
     place-content: center;
+    place-items: center;
 
     > .map-progress-marker-icon {
+      grid-area: container;
+      transition: opacity 0.25s ease-out;
       width: 50px;
       height: 50px;
-      transition: opacity 0.25s ease-out;
-      pointer-events: auto;
+      -webkit-mask-position: center;
+      mask-position: center;
       -webkit-mask-repeat: no-repeat;
       mask-repeat: no-repeat;
-      mask-position: center;
-      -webkit-mask-position: center;
-      grid-area: container;
+      pointer-events: auto;
 
       $icons: ("run", "walk", "swim", "hike", "row", "cycle");
 
@@ -327,21 +328,21 @@ div.progress-marker {
 }
 
 p.progress-marker-text {
-  font-family: $headings-font-family;
-  font-size: 20px;
   margin: 0;
   text-align: center;
-  pointer-events: auto;
   color: #ffffff;
+  font-family: $headings-font-family;
+  font-size: 20px;
+  pointer-events: auto;
 
   &.progress-marker-text-team-name {
-    font-size: 22px;
     white-space: nowrap;
+    font-size: 22px;
   }
 
   &.progress-marker-text-progress {
-    font-size: 18px;
     width: min-content;
+    font-size: 18px;
   }
 }
 
@@ -351,19 +352,19 @@ div.img-circle-wrap, img.img-circle {
 }
 
 div.img-circle-wrap {
-  width: 250px;
-  height: 250px;
   border: 3px solid #000000;
   background-image: url("data:image/svg+xml,%3Csvg stroke='currentColor' fill='currentColor' stroke-width='0' viewBox='0 0 496 512' height='1em' width='1em' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z'%3E%3C/path%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-size: cover;
+  width: 250px;
+  height: 250px;
   object-fit: cover;
 }
 
 img.img-circle {
+  border: 3px solid #ffffff;
   width: 100%;
   height: 100%;
-  border: 3px solid #ffffff;
 }
 
 team-bio:nth-of-type(2n) > div.peopleWrap > div.peopleContainer {
@@ -382,7 +383,7 @@ ul.footerList {
 
 ul.footerList > li > a {
   @extend .py-2;
-  text-decoration: none;
   text-transform: uppercase;
+  text-decoration: none;
   color: $light;
 }
