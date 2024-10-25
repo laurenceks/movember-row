@@ -10,7 +10,7 @@ const routeSource = { type: "geojson", data: { ...routeLinestring } };
 
 const zoomToFit = (map) =>
     map.fitBounds(bbox(routeLinestring), {
-        padding: 75,
+        padding: Math.min(Math.max(window.innerWidth * 0.05, 10), 75),
         offset: [0, 10],
     });
 
