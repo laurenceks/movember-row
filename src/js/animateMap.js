@@ -74,7 +74,11 @@ const animateMap = (map, sheetsData, scrolledIntoView = null) => {
                     map.getSource(team.sourceId).setData(newData);
 
                     // move marker to last point in new linestring
-                    team.marker.setLngLat(newData.geometry.coordinates.pop());
+                    team.marker.setLngLat(
+                        newData.geometry.coordinates[
+                            newData.geometry.coordinates.length - 1
+                        ]
+                    );
 
                     // update marker text
                     team.markerElement.lastElementChild.innerText = `${Math.round(
