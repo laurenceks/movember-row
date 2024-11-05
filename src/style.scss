@@ -24,6 +24,19 @@ $btn-font-family: $headings-font-family;
 @import "../node_modules/bootstrap/scss/transitions";
 @import "../node_modules/bootstrap/scss/modal";
 
+@mixin mask {
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  pointer-events: auto;
+}
+
+@mixin mask-path($iconFileName) {
+  -webkit-mask-image: url("../public/img/icons/#{$iconFileName}.svg");
+  mask-image: url("../public/img/icons/#{$iconFileName}.svg");
+}
+
 body {
   overflow-x: hidden;
 }
@@ -139,16 +152,55 @@ div#mapDiv {
   font-weight: 300 !important;
 }
 
-button.btn-map-replay {
+button.btn-map-replay, button.btn-map-zoom {
   position: absolute;
-  right: 10px;
   bottom: 10px;
-  transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
+  transition: opacity 0.4s ease-out, visibility 0.4s ease-out;
   opacity: 1;
   background-color: $dark;
+  background-position: center;
+  background-size: 50px 50px;
   padding: 0;
   width: 56px;
   height: 56px;
+
+  > span {
+    @include mask;
+    display: inline-block;
+    transition: background-color 0.4s ease-out;
+    background-color: $light;
+    width: 100%;
+    height: 100%;
+  }
+
+  &:hover > span {
+    background-color: $dark;
+  }
+}
+
+button.btn-map-replay {
+  right: 10px;
+
+  > span {
+    @include mask-path("replay")
+  }
+;
+}
+
+button.btn-map-zoom {
+  right: 76px;
+
+  &.btn-map-zoom-icon-0 > span {
+    @include mask-path("zoom_in_map");
+  }
+
+  &.btn-map-zoom-icon-1 > span {
+    @include mask-path("recenter");
+  }
+
+  &.btn-map-zoom-icon-2 > span {
+    @include mask-path("zoom_out_map");
+  }
 }
 
 button.btn-map-replay.hidden {
@@ -284,22 +336,18 @@ div.progress-marker {
     place-items: center;
 
     > .map-progress-marker-icon {
+      @include mask;
       grid-area: container;
       transition: opacity 0.25s ease-out;
       width: 50px;
       height: 50px;
-      -webkit-mask-position: center;
-      mask-position: center;
-      -webkit-mask-repeat: no-repeat;
-      mask-repeat: no-repeat;
       pointer-events: auto;
 
       $icons: ("run", "walk", "swim", "hike", "row", "cycle");
 
       @each $icon in $icons {
         &.map-progress-marker-icon-#{$icon} {
-          -webkit-mask-image: url("../public/img/icons/#{$icon}.svg");
-          mask-image: url("../public/img/icons/#{$icon}.svg");
+          @include mask-path($icon);
         }
       }
 
@@ -328,6 +376,8 @@ div.progress-marker {
 }
 
 p.progress-marker-text {
+  position: relative;
+  top: 24px;
   margin: 0;
   text-align: center;
   color: #ffffff;

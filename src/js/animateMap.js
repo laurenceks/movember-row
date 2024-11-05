@@ -39,17 +39,13 @@ const animateMap = (map, sheetsData, scrolledIntoView = null) => {
         if (progressPercent) {
             // if progress is above zero (i.e. if animation has started), then update each team's line and marker
             sheetsData.leaderboards.teams.forEach((team) => {
-                if (team.distance) {
-                    const safeTeamDistance = Math.min(
-                        totalDistanceInKilometres,
-                        team.distance || 0
-                    );
+                if (team.safeDistance) {
                     // calculate total duration based on percentage of goal
                     const teamDurationInMs =
                         durationInMs *
                         Math.min(
                             1,
-                            safeTeamDistance /
+                            team.safeDistance /
                                 Math.min(
                                     totalDistanceInKilometres,
                                     sheetsData.leaderboards.teams[0]
@@ -62,7 +58,7 @@ const animateMap = (map, sheetsData, scrolledIntoView = null) => {
                         easing(runtime / teamDurationInMs)
                     );
                     const teamProgressDistance =
-                        teamDurationProgressPercent * safeTeamDistance;
+                        teamDurationProgressPercent * team.safeDistance;
 
                     // line data
                     const newData = lineSliceAlong(
@@ -84,7 +80,7 @@ const animateMap = (map, sheetsData, scrolledIntoView = null) => {
                     team.markerElement.lastElementChild.innerText = `${Math.round(
                         teamProgressDistance
                     )}km (${Math.round(
-                        (safeTeamDistance / totalDistanceInKilometres) * 100
+                        (team.safeDistance / totalDistanceInKilometres) * 100
                     )}%)`;
 
                     // if over channel and marker doesn't have swimming icon class

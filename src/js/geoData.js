@@ -38,8 +38,6 @@ const channelCrossingLengthsAlongRoute = {
     ),
 };
 
-console.log(totalDistanceInKilometres);
-
 export {
     routeDirection,
     routeLinestring,

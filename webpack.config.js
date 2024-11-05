@@ -40,7 +40,7 @@ module.exports = {
                 ],
                 { nodir: true }
             ),
-            safelist: [/map-progress-marker-icon-\w+/],
+            safelist: [/map-progress-marker-icon-\w+/, /btn-map-zoom-icon-\d+/],
         }),
         new HtmlWebpackPlugin({ template: "public/index.html" }),
         new MiniCssExtractPlugin({ filename: "[name].css" }),
