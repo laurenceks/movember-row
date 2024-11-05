@@ -380,6 +380,7 @@ p.progress-marker-text {
   top: 24px;
   margin: 0;
   text-align: center;
+  text-shadow: -1px -1px $dark, 1px 1px $dark, -1px 1px $dark, 1px -1px $dark;
   color: #ffffff;
   font-family: $headings-font-family;
   font-size: 20px;
