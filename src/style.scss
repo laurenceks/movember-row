@@ -330,24 +330,40 @@ div.progress-marker {
   }
 
   > .map-progress-marker-container {
-    display: grid;
-    grid-template: "container";
-    place-content: center;
-    place-items: center;
+    position: relative;
+    width: 54px;
+    height: 54px;
 
     > .map-progress-marker-icon {
-      @include mask;
-      grid-area: container;
+      position: absolute;
+      top: 0;
+      left: 0;
       transition: opacity 0.25s ease-out;
-      width: 50px;
-      height: 50px;
+      width: 100%;
+      height: 100%;
       pointer-events: auto;
 
       $icons: ("run", "walk", "swim", "hike", "row", "cycle");
 
       @each $icon in $icons {
         &.map-progress-marker-icon-#{$icon} {
-          @include mask-path($icon);
+          > div {
+            @include mask;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          }
+
+          > .map-progress-marker-icon-image {
+            @include mask-path($icon);
+          }
+
+          > .map-progress-marker-icon-bg {
+            @include mask-path($icon + "-bg");
+            background-color: $dark;
+          }
         }
       }
 

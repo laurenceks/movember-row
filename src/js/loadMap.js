@@ -81,7 +81,10 @@ const loadMap = (map, sheetsData) => {
         team.marker = new mapboxgl.Marker(createMapMarker(team))
             .setLngLat(routeStart.geometry.coordinates)
             .addTo(map);
+
         team.markerElement = team.marker.getElement();
+        team.markerElement.style.zIndex =
+            sheetsData.leaderboards.teams.length - i;
 
         // if first or last marker, check if width is wider than currently recorded widest marker and update if needed
         if (

@@ -1,10 +1,15 @@
 import { routeDirection } from "./geoData";
 
 const createMapMarkerIcon = (type = "run", colour = "#ffffff") => {
-    const markerIcon = document.createElement("div");
-    markerIcon.className = `map-progress-marker-icon map-progress-marker-icon-${type}`;
-    markerIcon.style.backgroundColor = colour;
-    return markerIcon;
+    const markerIconContainer = document.createElement("div");
+    markerIconContainer.className = `map-progress-marker-icon map-progress-marker-icon-${type}`;
+    const makerIconImage = document.createElement("div");
+    makerIconImage.className = "map-progress-marker-icon-image";
+    makerIconImage.style.backgroundColor = colour;
+    const makerIconBg = document.createElement("div");
+    makerIconBg.className = "map-progress-marker-icon-bg";
+    markerIconContainer.append(makerIconBg, makerIconImage);
+    return markerIconContainer;
 };
 const createMapMarker = ({
     teamId,
