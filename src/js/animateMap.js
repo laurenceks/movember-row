@@ -80,7 +80,7 @@ const animateMap = (map, sheetsData, scrolledIntoView = null) => {
                     team.markerElement.lastElementChild.innerText = `${Math.round(
                         teamProgressDistance
                     )}km (${Math.round(
-                        (team.safeDistance / totalDistanceInKilometres) * 100
+                        (teamProgressDistance / totalDistanceInKilometres) * 100
                     )}%)`;
 
                     // if over channel and marker doesn't have swimming icon class
